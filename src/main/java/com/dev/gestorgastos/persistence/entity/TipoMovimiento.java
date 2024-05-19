@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tipos_movimiento")
-public class Tipo_movimiento {
+public class TipoMovimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipo_movimiento")
@@ -14,4 +14,7 @@ public class Tipo_movimiento {
 
     @Column(name = "nombre_tipo_movimiento")
     private String nombreTipoMovimiento;
+
+    @OneToMany(mappedBy = "tipoMovimiento")
+    private List<Movimiento> movimientos;
 }

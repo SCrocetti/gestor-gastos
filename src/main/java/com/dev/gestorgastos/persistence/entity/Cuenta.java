@@ -2,6 +2,8 @@ package com.dev.gestorgastos.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cuentas")
 public class Cuenta {
@@ -41,4 +43,6 @@ public class Cuenta {
     @JoinColumn(name = "id_persona",insertable = false,updatable = false)
     private Persona persona;
 
+    @OneToMany(mappedBy = "cuenta")
+    private List<Movimiento> movimientos;
 }
