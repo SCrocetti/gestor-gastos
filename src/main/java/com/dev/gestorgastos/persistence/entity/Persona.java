@@ -2,6 +2,8 @@ package com.dev.gestorgastos.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "personas")
 public class Persona {
@@ -22,4 +24,8 @@ public class Persona {
     @ManyToOne
     @JoinColumn(name = "id_tipo_documento",insertable = false,updatable = false)
     private TipoDocumento tipoDocumento;
+
+    @OneToMany(mappedBy = "persona")
+    private List<Cuenta> cuentas;
+
 }

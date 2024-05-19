@@ -14,4 +14,7 @@ public class Denominacion {
 
     @Column(name = "nombre_denominacion")
     private String nombreDenominacion;
+
+    @OneToMany(mappedBy = "denominacion")
+    private List<Cuenta> cuentas;
 }

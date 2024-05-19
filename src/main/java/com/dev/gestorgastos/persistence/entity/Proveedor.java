@@ -2,6 +2,8 @@ package com.dev.gestorgastos.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "proveedores")
 public class Proveedor {
@@ -12,4 +14,7 @@ public class Proveedor {
 
     @Column(name = "nombre_proveedor")
     private String nombreProveedor;
+
+    @OneToMany(mappedBy = "proveedor")
+    private List<Cuenta> cuentas;
 }
