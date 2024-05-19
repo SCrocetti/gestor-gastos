@@ -15,6 +15,13 @@ public class TipoDocumento {
     @Column(name = "nombre_tipo_documento")
     private String nombreTipoDocumento;
 
+    @Column(name = "id_pais")
+    private Integer idPais;
+
     @OneToMany(mappedBy = "tipoDocumento")
     private List<Persona> personas;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pais",insertable = false,updatable = false)
+    private Pais pais;
 }
