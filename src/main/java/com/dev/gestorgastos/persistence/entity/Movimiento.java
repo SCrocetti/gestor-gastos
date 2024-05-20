@@ -25,6 +25,9 @@ public class Movimiento {
     @Column(name = "id_cuenta")
     private Integer idCuenta;
 
+    @Column(name = "id_presupuesto")
+    private Integer idPresupuesto;
+
     @ManyToOne
     @JoinColumn(name = "id_tipo_movimiento",insertable = false,updatable = false)
     private TipoMovimiento tipoMovimiento;
@@ -33,9 +36,15 @@ public class Movimiento {
     @JoinColumn(name = "id_cuenta",insertable = false,updatable = false)
     private Cuenta cuenta;
 
+
     @OneToOne(mappedBy = "egreso")
     private Transaccion transaccionEgreso;
 
     @OneToOne(mappedBy = "ingreso")
     private Transaccion transaccionIngreso;
+
+    @ManyToOne
+    @JoinColumn(name = "id_presupuesto",insertable = false,updatable = false)
+    private Presupuesto presupuesto;
+
 }

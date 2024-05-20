@@ -45,4 +45,7 @@ public class Cuenta {
 
     @OneToMany(mappedBy = "cuenta")
     private List<Movimiento> movimientos;
+
+    @OneToMany(mappedBy = "cuenta")
+    private List<Presupuesto> presupuestos;
 }

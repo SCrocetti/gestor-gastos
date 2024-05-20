@@ -21,4 +21,7 @@ public class Plan {
 
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
+
+    @OneToMany(mappedBy = "plan")
+    private List<Presupuesto> presupuestos;
 }

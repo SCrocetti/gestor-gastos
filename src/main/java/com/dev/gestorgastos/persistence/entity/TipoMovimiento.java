@@ -17,4 +17,7 @@ public class TipoMovimiento {
 
     @OneToMany(mappedBy = "tipoMovimiento")
     private List<Movimiento> movimientos;
+
+    @OneToMany(mappedBy = "tipoMovimiento")
+    private List<Presupuesto> presupuestos;
 }
