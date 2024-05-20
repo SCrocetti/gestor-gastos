@@ -42,4 +42,84 @@ public class Presupuesto {
 
     @OneToMany(mappedBy = "presupuesto")
     private List<Movimiento> movimientos;
+
+    public Integer getIdPresupuesto() {
+        return idPresupuesto;
+    }
+
+    public void setIdPresupuesto(Integer idPresupuesto) {
+        this.idPresupuesto = idPresupuesto;
+    }
+
+    public Long getMontoEjecutado() {
+        return montoEjecutado;
+    }
+
+    public void setMontoEjecutado(Long montoEjecutado) {
+        this.montoEjecutado = montoEjecutado;
+    }
+
+    public Long getMontoAsignado() {
+        return montoAsignado;
+    }
+
+    public void setMontoAsignado(Long montoAsignado) {
+        this.montoAsignado = montoAsignado;
+    }
+
+    public Integer getIdTipoMovimiento() {
+        return idTipoMovimiento;
+    }
+
+    public void setIdTipoMovimiento(Integer idTipoMovimiento) {
+        this.idTipoMovimiento = idTipoMovimiento;
+    }
+
+    public Integer getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(Integer idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    public Integer getIdPlan() {
+        return idPlan;
+    }
+
+    public void setIdPlan(Integer idPlan) {
+        this.idPlan = idPlan;
+    }
+
+    public TipoMovimiento getTipoMovimiento() {
+        return tipoMovimiento;
+    }
+
+    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
+
+    public List<Movimiento> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(List<Movimiento> movimientos) {
+        this.movimientos = movimientos;
+    }
 }

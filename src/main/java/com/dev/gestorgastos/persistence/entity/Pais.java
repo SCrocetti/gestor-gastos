@@ -17,4 +17,28 @@ public class Pais {
 
     @OneToMany(mappedBy = "pais")
     private List<TipoDocumento> tiposDocumento;
+
+    public Integer getIdPais() {
+        return idPais;
+    }
+
+    public void setIdPais(Integer idPais) {
+        this.idPais = idPais;
+    }
+
+    public String getNombrePais() {
+        return nombrePais;
+    }
+
+    public void setNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
+    }
+
+    public List<TipoDocumento> getTiposDocumento() {
+        return tiposDocumento;
+    }
+
+    public void setTiposDocumento(List<TipoDocumento> tiposDocumento) {
+        this.tiposDocumento = tiposDocumento;
+    }
 }

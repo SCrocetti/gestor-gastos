@@ -17,4 +17,28 @@ public class Denominacion {
 
     @OneToMany(mappedBy = "denominacion")
     private List<Cuenta> cuentas;
+
+    public Integer getIdDenominacion() {
+        return idDenominacion;
+    }
+
+    public void setIdDenominacion(Integer idDenominacion) {
+        this.idDenominacion = idDenominacion;
+    }
+
+    public String getNombreDenominacion() {
+        return nombreDenominacion;
+    }
+
+    public void setNombreDenominacion(String nombreDenominacion) {
+        this.nombreDenominacion = nombreDenominacion;
+    }
+
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void setCuentas(List<Cuenta> cuentas) {
+        this.cuentas = cuentas;
+    }
 }
