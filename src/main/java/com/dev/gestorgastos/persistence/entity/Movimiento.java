@@ -32,4 +32,10 @@ public class Movimiento {
     @ManyToOne
     @JoinColumn(name = "id_cuenta",insertable = false,updatable = false)
     private Cuenta cuenta;
+
+    @OneToOne(mappedBy = "egreso")
+    private Transaccion transaccionEgreso;
+
+    @OneToOne(mappedBy = "ingreso")
+    private Transaccion transaccionIngreso;
 }
