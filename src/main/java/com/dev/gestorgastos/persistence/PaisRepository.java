@@ -17,7 +17,8 @@ public class PaisRepository {
     public Pais save(Pais pais){
         return paisCrudRepository.save(pais);
     }
-    public void delete(Integer paisId){
+    public boolean delete(Integer paisId){
         paisCrudRepository.deleteById(paisId);
+        return paisCrudRepository.existsById(paisId);
     }
 }
