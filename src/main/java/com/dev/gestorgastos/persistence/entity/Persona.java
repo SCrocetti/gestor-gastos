@@ -1,6 +1,7 @@
 package com.dev.gestorgastos.persistence.entity;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
 
@@ -12,18 +13,16 @@ public class Persona {
     @Column(name = "id_persona")
     private Integer idPersona;
 
-    @Column(name = "id_tipo_documento")
-    private Integer idTipoDocumento;
+    @NotNull
+    @Column(name = "numero_documento", unique = true, length = 50)
+    private String numeroDocumento;
 
-    @Column(name = "nombres")
+    @Column(name = "nombres", length = 100)
     private String nombres;
 
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", length = 100)
     private String apellidos;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_documento",insertable = false,updatable = false)
-    private TipoDocumento tipoDocumento;
 
     @OneToMany(mappedBy = "persona")
     private List<Cuenta> cuentas;
@@ -34,14 +33,6 @@ public class Persona {
 
     public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
-    }
-
-    public Integer getIdTipoDocumento() {
-        return idTipoDocumento;
-    }
-
-    public void setIdTipoDocumento(Integer idTipoDocumento) {
-        this.idTipoDocumento = idTipoDocumento;
     }
 
     public String getNombres() {
@@ -60,12 +51,12 @@ public class Persona {
         this.apellidos = apellidos;
     }
 
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
+    public String getNumeroDocumento() {
+        return numeroDocumento;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
     public List<Cuenta> getCuentas() {
