@@ -15,10 +15,10 @@ public class Transaccion {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "id_egreso")
+    @Column(name = "id_egreso", insertable = false, updatable = false)
     private Integer idEgreso;
 
-    @Column(name = "id_ingreso")
+    @Column(name = "id_ingreso", insertable = false, updatable = false)
     private Integer idIngreso;
 
     @OneToOne
