@@ -6,11 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PersonaRepository implements PersonaDtoRepository {
     @Autowired
     PersonaCrudRepository personaCrudRepository;
+
+
+    @Override
+    public Optional<PersonaDto> getByIdPersona(Integer idPersona) {
+        return personaCrudRepository.findByIdPersona(idPersona).map(PersonaMapper.INSTANCE::toDto);
+    }
+
+    @Override
+    public Optional<PersonaDto> getByNumeroDocumento(String numeroDocumento) {
+        return personaCrudRepository.findByNumeroDocumento(numeroDocumento).map(PersonaMapper.INSTANCE::toDto);
+    }
 
     @Override
     public List<PersonaDto> getAll() {
@@ -24,7 +36,9 @@ public class PersonaRepository implements PersonaDtoRepository {
 
     @Override
     public boolean delete(Integer personaId) {
-        personaCrudRepository.deleteById(personaId);
-        return personaCrudRepository.existsById(personaId);
+        return getByIdPersona(personaId).map(persona -> {
+            personaCrudRepository.deleteById(personaId);
+            return true;
+        }).orElse(false);
     }
 }

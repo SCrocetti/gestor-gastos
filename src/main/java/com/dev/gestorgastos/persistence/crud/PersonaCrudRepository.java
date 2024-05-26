@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface PersonaCrudRepository extends CrudRepository<Persona,Integer> {
 
+    Optional<Persona> findByIdPersona(Integer idPersona);
     Optional<Persona> findByNumeroDocumento(String numeroDocumento);
     List<Persona> findAllByOrderByApellidosAscNombresAsc();
 }
