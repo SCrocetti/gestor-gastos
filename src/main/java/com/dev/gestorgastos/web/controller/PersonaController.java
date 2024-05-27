@@ -2,11 +2,16 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.domain.service.PersonaService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import io.swagger.annotations.*;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,40 +24,40 @@ public class PersonaController {
     private PersonaService personaService;
 
     @GetMapping("/id/{id}")
-    @ApiOperation("Search a persona with an id")
+    @Operation(summary = "Get by Id", description = "Get a Persona by its idPersona")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Persona not found")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Persona not found")
     })
-    public ResponseEntity<PersonaDto> getByIdPersona(@ApiParam(value ="Id of the persona",required = true,example = "7") @PathVariable("id")  Integer idPersona) {
-        return personaService.getByIdPersona(idPersona)
+    public ResponseEntity<PersonaDto> getByIdPersona(@Parameter(description = "Id of the persona") @PathVariable("id")  String idPersona) {
+        return personaService.getByIdPersona(Integer.parseInt(idPersona))
                 .map(persona-> new ResponseEntity<PersonaDto>(persona, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/documento/{documento}")
-    @ApiOperation("Search a persona with a documento")
+    @Operation(summary = "Get by documento", description = "Get a Persona by its numeroDocumento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Persona not found")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Persona not found")
     })
-    public ResponseEntity<PersonaDto>  getByNumeroDocumento(@ApiParam(value ="Documento of the persona",required = true,example = "666789") @PathVariable("documento") String numeroDocumento) {
+    public ResponseEntity<PersonaDto>  getByNumeroDocumento(@Parameter(description ="Documento of the persona") @PathVariable("documento") String numeroDocumento) {
         return personaService.getByNumeroDocumento(numeroDocumento)
                 .map(persona-> new ResponseEntity<PersonaDto>(persona, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @GetMapping("/all")
-    @ApiOperation("Get all personas data")
-    @ApiResponse(code=200, message = "OK")
+    @Operation(summary = "Get all personas data", description = "Get the list of all Personas")
+    @ApiResponse(responseCode = "200", description = "OK")
     public ResponseEntity<List<PersonaDto>> getAll() {
         return new ResponseEntity<> (personaService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/save")
-    @ApiOperation("Saves a new persona")
+    @Operation(summary = "Saves a persona", description = "Saves the data of a Persona")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 409, message = "Conflict - Persona with the same numeroDocumento already exists")
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Persona with the same numeroDocumento already exists")
     })
     public ResponseEntity<PersonaDto> save(@RequestBody PersonaDto personaDto) {
         Optional<PersonaDto> existingPersona = personaService.getByNumeroDocumento(personaDto.getNumeroDocumento());
@@ -65,12 +70,12 @@ public class PersonaController {
         }
     }
     @DeleteMapping("/delete/{id}")
-    @ApiOperation("Deletes a persona by id")
+    @Operation(summary = "Deletes a persona by id", description = "Deletes a persona by id")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Persona not found")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Persona not found")
     })
-    public ResponseEntity delete(@ApiParam(value ="Id of the persona",required = true,example = "9") @PathVariable("id") Integer personaId) {
-        return  new ResponseEntity(personaService.delete(personaId) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity delete(@Parameter(description ="Id of the persona") @PathVariable("id") String personaId) {
+        return  new ResponseEntity(personaService.delete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
