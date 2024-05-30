@@ -35,14 +35,14 @@ public class ProveedorController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/nombre/{nombre}")
-    @Operation(summary = "Get by nombreProveedor", description = "Get a list of Proveedores by their nombreProveedor")
+    @GetMapping("/active/nombre/{nombre}")
+    @Operation(summary = "Get active by nombreProveedor", description = "Get a list of active Proveedores by their nombreProveedor")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Proveedor found")
     })
-    public ResponseEntity<List<ProveedorDto>> getByNombreProveedor(@Parameter(description ="Nombre of the proveedor") @PathVariable("nombre") String nombreProveedor) {
-        return proveedorService.getByNombreProveedorContains(nombreProveedor)
+    public ResponseEntity<List<ProveedorDto>> getActivosByNombreProveedor(@Parameter(description ="Nombre of the proveedor") @PathVariable("nombre") String nombreProveedor) {
+        return proveedorService.getActiveByNombreProveedorContains(nombreProveedor)
                 .map(proveedores -> {
                     if (proveedores.isEmpty()) {
                         return new ResponseEntity<List<ProveedorDto>>(HttpStatus.NOT_FOUND);
@@ -52,11 +52,50 @@ public class ProveedorController {
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/all")
-    @Operation(summary = "Get all proveedores data", description = "Get the list of all Proveedores")
+    @GetMapping("/unaactive/nombre/{nombre}")
+    @Operation(summary = "Get unactive by nombreProveedor", description = "Get a list of unactive Proveedores by their nombreProveedor")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Proveedor found")
+    })
+    public ResponseEntity<List<ProveedorDto>> getInactivosByNombreProveedor(@Parameter(description ="Nombre of the proveedor") @PathVariable("nombre") String nombreProveedor) {
+        return proveedorService.getUnactiveByNombreProveedorContains(nombreProveedor)
+                .map(proveedores -> {
+                    if (proveedores.isEmpty()) {
+                        return new ResponseEntity<List<ProveedorDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(proveedores, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/active")
+    @Operation(summary = "Get all active proveedores data", description = "Get the list of all active Proveedores")
     @ApiResponse(responseCode = "200", description = "OK")
-    public ResponseEntity<List<ProveedorDto>> getAll() {
-        return new ResponseEntity<> (proveedorService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<ProveedorDto>> getAllActive() {
+        return proveedorService.getAll()
+                .map(proveedores -> {
+                    if (proveedores.isEmpty()) {
+                        return new ResponseEntity<List<ProveedorDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(proveedores, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/unactive")
+    @Operation(summary = "Get all unactive proveedores data", description = "Get the list of all unactive Proveedores")
+    @ApiResponse(responseCode = "200", description = "OK")
+    public ResponseEntity<List<ProveedorDto>> getAllUnactive() {
+        return proveedorService.getAllDeleted()
+                .map(proveedores -> {
+                    if (proveedores.isEmpty()) {
+                        return new ResponseEntity<List<ProveedorDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(proveedores, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save")
@@ -73,5 +112,14 @@ public class ProveedorController {
     })
     public ResponseEntity delete(@Parameter(description ="Id of the proveedor") @PathVariable("id") String proveedorId) {
         return  new ResponseEntity(proveedorService.delete(Integer.parseInt(proveedorId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+    @DeleteMapping("/undelete/{id}")
+    @Operation(summary = "Undeletes a proveedor by id", description = "Undeletes a proveedor by id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Proveedor not found")
+    })
+    public ResponseEntity unDelete(@Parameter(description ="Id of the proveedor") @PathVariable("id") String proveedorId) {
+        return  new ResponseEntity(proveedorService.unDelete(Integer.parseInt(proveedorId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

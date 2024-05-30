@@ -28,6 +28,9 @@ public class Presupuesto {
     @Column(name = "id_plan")
     private Integer idPlan;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @ManyToOne
     @JoinColumn(name = "id_tipo_movimiento",insertable = false,updatable = false)
     private TipoMovimiento tipoMovimiento;
@@ -89,6 +92,14 @@ public class Presupuesto {
 
     public void setIdPlan(Integer idPlan) {
         this.idPlan = idPlan;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public TipoMovimiento getTipoMovimiento() {

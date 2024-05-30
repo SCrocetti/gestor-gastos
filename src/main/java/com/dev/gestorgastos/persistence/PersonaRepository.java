@@ -25,8 +25,13 @@ public class PersonaRepository implements PersonaDtoRepository {
     }
 
     @Override
-    public List<PersonaDto> getAll() {
-        return PersonaMapper.INSTANCE.toDtos(personaCrudRepository.findAllByOrderByApellidosAscNombresAsc());
+    public Optional<List<PersonaDto>> getAll() {
+        return personaCrudRepository.findAllByActivoTrueOrderByApellidosAscNombresAsc().map(PersonaMapper.INSTANCE::toDtos);
+    }
+
+    @Override
+    public Optional<List<PersonaDto>> getAllDeleted() {
+        return personaCrudRepository.findAllByActivoFalseOrderByApellidosAscNombresAsc().map(PersonaMapper.INSTANCE::toDtos);
     }
 
     @Override
@@ -37,7 +42,15 @@ public class PersonaRepository implements PersonaDtoRepository {
     @Override
     public boolean delete(Integer personaId) {
         return getByIdPersona(personaId).map(persona -> {
-            personaCrudRepository.deleteById(personaId);
+            personaCrudRepository.setActivoByIdPersona(personaId,false);
+            return true;
+        }).orElse(false);
+    }
+
+    @Override
+    public  boolean unDelete(Integer personaId){
+        return getByIdPersona(personaId).map(persona -> {
+            personaCrudRepository.setActivoByIdPersona(personaId,true);
             return true;
         }).orElse(false);
     }

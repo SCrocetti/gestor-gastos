@@ -23,13 +23,22 @@ public class ProveedorRepository implements ProveedorDtoRepository {
     }
 
     @Override
-    public Optional<List<ProveedorDto>> getByNombreProveedorContains(String nombreProveedor) {
-        return proveedorCrudRepository.findByNombreProveedorContaining(nombreProveedor).map(ProveedorMapper.INSTANCE::toDtos);
+    public Optional<List<ProveedorDto>> getActivosByNombreProveedorContains(String nombreProveedor) {
+        return proveedorCrudRepository.findByNombreProveedorContainingAndActivoTrueOrderByNombreProveedorAsc(nombreProveedor).map(ProveedorMapper.INSTANCE::toDtos);
     }
 
     @Override
-    public List<ProveedorDto> getAll() {
-        return ProveedorMapper.INSTANCE.toDtos(proveedorCrudRepository.findAllByOrderByNombreProveedorAsc());
+    public Optional<List<ProveedorDto>> getInactivosByNombreProveedorContains(String nombreProveedor) {
+        return proveedorCrudRepository.findByNombreProveedorContainingAndActivoFalseOrderByNombreProveedorAsc(nombreProveedor).map(ProveedorMapper.INSTANCE::toDtos);
+    }
+    @Override
+    public Optional<List<ProveedorDto>> getAll() {
+        return proveedorCrudRepository.findAllByActivoTrueOrderByNombreProveedorAsc().map(ProveedorMapper.INSTANCE::toDtos);
+    }
+
+    @Override
+    public Optional<List<ProveedorDto>> getAllDeleted() {
+        return proveedorCrudRepository.findAllByActivoFalseOrderByNombreProveedorAsc().map(ProveedorMapper.INSTANCE::toDtos);
     }
 
     @Override
@@ -40,7 +49,15 @@ public class ProveedorRepository implements ProveedorDtoRepository {
     @Override
     public boolean delete(Integer idProveedor) {
         return  getByIdProveedor(idProveedor).map(proveedor -> {
-            proveedorCrudRepository.deleteById(idProveedor);
+            proveedorCrudRepository.setActivoByIdProveedor(idProveedor,false);
+            return true;
+        }).orElse(false);
+    }
+
+    @Override
+    public boolean unDelete(Integer idProveedor) {
+        return  getByIdProveedor(idProveedor).map(proveedor -> {
+            proveedorCrudRepository.setActivoByIdProveedor(idProveedor,true);
             return true;
         }).orElse(false);
     }

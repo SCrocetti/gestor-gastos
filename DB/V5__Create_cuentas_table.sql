@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS cuentas (
     fondos BIGINT,
     id_proveedor INTEGER REFERENCES proveedores(id_proveedor),
     id_denominacion INTEGER REFERENCES  denominaciones(id_denominacion),
-    id_persona INTEGER REFERENCES personas(id_persona) 
+    id_persona INTEGER REFERENCES personas(id_persona),
+    activo BOOLEAN DEFAULT TRUE
 );

@@ -21,6 +21,9 @@ public class Transaccion {
     @Column(name = "id_ingreso", insertable = false, updatable = false)
     private Integer idIngreso;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToOne
     @JoinColumn(name = "id_egreso", referencedColumnName = "id_movimiento")
     private Movimiento egreso;
@@ -59,6 +62,14 @@ public class Transaccion {
 
     public void setIdIngreso(Integer idIngreso) {
         this.idIngreso = idIngreso;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Movimiento getEgreso() {

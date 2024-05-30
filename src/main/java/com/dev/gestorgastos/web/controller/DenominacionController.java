@@ -36,14 +36,14 @@ public class DenominacionController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/nombre/{nombre}")
-    @Operation(summary = "Get by nombreDenominacion", description = "Get a list of Denominaciones by their nombreDenominacion")
+    @GetMapping("/active/nombre/{nombre}")
+    @Operation(summary = "Get activos by nombreDenominacion", description = "Get a list of active Denominaciones by their nombreDenominacion")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Denominacion found")
     })
-    public ResponseEntity<List<DenominacionDto>> getByNombreDenominacion(@Parameter(description ="Nombre of the denominacion") @PathVariable("nombre") String nombreDenominacion) {
-        return denominacionService.getByNombreDenominacionContains(nombreDenominacion)
+    public ResponseEntity<List<DenominacionDto>> getActivosByNombreDenominacion(@Parameter(description ="Nombre of the denominacion") @PathVariable("nombre") String nombreDenominacion) {
+        return denominacionService.getActivosByNombreDenominacionContains(nombreDenominacion)
                 .map(denominaciones -> {
                     if (denominaciones.isEmpty()) {
                         return new ResponseEntity<List<DenominacionDto>>(HttpStatus.NOT_FOUND);
@@ -53,13 +53,52 @@ public class DenominacionController {
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/all")
-    @Operation(summary = "Get all denominaciones data", description = "Get the list of all Denominaciones")
-    @ApiResponse(responseCode = "200", description = "OK")
-    public ResponseEntity<List<DenominacionDto>> getAll() {
-        return new ResponseEntity<> (denominacionService.getAll(), HttpStatus.OK);
-    }
 
+    @GetMapping("/unactive/nombre/{nombre}")
+    @Operation(summary = "Get inactivos by nombreDenominacion", description = "Get a list of unactive Denominaciones by their nombreDenominacion")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Denominacion found")
+    })
+    public ResponseEntity<List<DenominacionDto>> getInactivosByNombreDenominacion(@Parameter(description ="Nombre of the denominacion") @PathVariable("nombre") String nombreDenominacion) {
+        return denominacionService.getInactivosByNombreDenominacionContains(nombreDenominacion)
+                .map(denominaciones -> {
+                    if (denominaciones.isEmpty()) {
+                        return new ResponseEntity<List<DenominacionDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(denominaciones, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/active")
+    @Operation(summary = "Get all active denominaciones data", description = "Get the list of all active Denominaciones")
+    @ApiResponse(responseCode = "200", description = "OK")
+    public ResponseEntity<List<DenominacionDto>> getAllActive() {
+        return denominacionService.getAll()
+                .map(denominaciones -> {
+                    if (denominaciones.isEmpty()) {
+                        return new ResponseEntity<List<DenominacionDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(denominaciones, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/unactive")
+    @Operation(summary = "Get all unactive denominaciones data", description = "Get the list of all unactive Denominaciones")
+    @ApiResponse(responseCode = "200", description = "OK")
+    public ResponseEntity<List<DenominacionDto>> getAllUnactive() {
+        return denominacionService.getAllDeleted()
+                .map(denominaciones -> {
+                    if (denominaciones.isEmpty()) {
+                        return new ResponseEntity<List<DenominacionDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(denominaciones, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     @PostMapping("/save")
     @Operation(summary = "Saves a denominacion", description = "Saves the data of a Denominacion")
     @ApiResponse(responseCode = "201", description = "Created")
@@ -74,5 +113,14 @@ public class DenominacionController {
     })
     public ResponseEntity delete(@Parameter(description ="Id of the denominacion") @PathVariable("id") String denominacionId) {
         return  new ResponseEntity(denominacionService.delete(Integer.parseInt(denominacionId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+    @DeleteMapping("/undelete/{id}")
+    @Operation(summary = "Undeletes a denominacion by id", description = "Undeletes a denominacion by id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Denominacion not found")
+    })
+    public ResponseEntity unDelete(@Parameter(description ="Id of the denominacion") @PathVariable("id") String denominacionId) {
+        return  new ResponseEntity(denominacionService.unDelete(Integer.parseInt(denominacionId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

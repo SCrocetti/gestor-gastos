@@ -3,13 +3,14 @@ package com.dev.gestorgastos.domain;
 public class DenominacionDto {
     private Integer idDenominacion;
     private String nombreDenominacion;
-
+    private boolean activo;
     public DenominacionDto() {
     }
 
-    public DenominacionDto(Integer idDenominacion, String nombreDenominacion) {
+    public DenominacionDto(Integer idDenominacion, String nombreDenominacion, boolean activo) {
         this.idDenominacion = idDenominacion;
         this.nombreDenominacion = nombreDenominacion;
+        this.activo=activo;
     }
 
     public Integer getIdDenominacion() {
@@ -26,5 +27,13 @@ public class DenominacionDto {
 
     public void setNombreDenominacion(String nombreDenominacion) {
         this.nombreDenominacion = nombreDenominacion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

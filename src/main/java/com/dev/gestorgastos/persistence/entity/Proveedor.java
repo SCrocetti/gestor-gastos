@@ -18,6 +18,9 @@ public class Proveedor {
     @OneToMany(mappedBy = "proveedor")
     private List<Cuenta> cuentas;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     public Integer getIdProveedor() {
         return idProveedor;
     }
@@ -32,6 +35,14 @@ public class Proveedor {
 
     public void setNombreProveedor(String nombreProveedor) {
         this.nombreProveedor = nombreProveedor;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public List<Cuenta> getCuentas() {

@@ -24,15 +24,24 @@ public class DenominacionRepository implements DenominacionDtoRepository {
     }
 
     @Override
-    public Optional<List<DenominacionDto>> getByNombreDenominacionContains(String nombreDenominacion) {
-        return denominacionCrudRepository.findByNombreDenominacionContaining(nombreDenominacion).map(DenominacionMapper.INSTANCE::toDtos);
+    public Optional<List<DenominacionDto>> getActivosByNombreDenominacionContains(String nombreDenominacion) {
+        return denominacionCrudRepository.findByNombreDenominacionContainingAndActivoTrueOrderByNombreDenominacionAsc(nombreDenominacion).map(DenominacionMapper.INSTANCE::toDtos);
     }
 
     @Override
-    public List<DenominacionDto> getAll() {
-        return DenominacionMapper.INSTANCE.toDtos(denominacionCrudRepository.findAllByOrderByNombreDenominacionAsc());
+    public Optional<List<DenominacionDto>> getInactivosByNombreDenominacionContains(String nombreDenominacion) {
+        return denominacionCrudRepository.findByNombreDenominacionContainingAndActivoFalseOrderByNombreDenominacionAsc(nombreDenominacion).map(DenominacionMapper.INSTANCE::toDtos);
     }
 
+    @Override
+    public Optional<List<DenominacionDto>> getAll() {
+        return denominacionCrudRepository.findAllByActivoTrueOrderByNombreDenominacionAsc().map(DenominacionMapper.INSTANCE::toDtos);
+    }
+
+    @Override
+    public Optional<List<DenominacionDto>> getAllDeleted(){
+        return denominacionCrudRepository.findAllByActivoFalseOrderByNombreDenominacionAsc().map(DenominacionMapper.INSTANCE::toDtos);
+    }
     @Override
     public DenominacionDto save(DenominacionDto denominacionDto) {
         return DenominacionMapper.INSTANCE.toDto(denominacionCrudRepository.save(DenominacionMapper.INSTANCE.toEntity(denominacionDto)));
@@ -41,7 +50,15 @@ public class DenominacionRepository implements DenominacionDtoRepository {
     @Override
     public boolean delete(Integer idDenominacion) {
         return  getByIdDenominacion(idDenominacion).map(denominacion -> {
-            denominacionCrudRepository.deleteById(idDenominacion);
+            denominacionCrudRepository.setActivoByIdDenominacion(idDenominacion,false);
+            return true;
+        }).orElse(false);
+    }
+
+    @Override
+    public boolean unDelete(Integer idDenominacion) {
+        return  getByIdDenominacion(idDenominacion).map(denominacion -> {
+            denominacionCrudRepository.setActivoByIdDenominacion(idDenominacion,true);
             return true;
         }).orElse(false);
     }

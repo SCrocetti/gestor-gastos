@@ -43,6 +43,9 @@ public class Cuenta {
     @JoinColumn(name = "id_persona",insertable = false,updatable = false)
     private Persona persona;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToMany(mappedBy = "cuenta")
     private List<Movimiento> movimientos;
 
@@ -111,6 +114,14 @@ public class Cuenta {
 
     public void setIdProveedor(Integer idProveedor) {
         this.idProveedor = idProveedor;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Long getFondos() {

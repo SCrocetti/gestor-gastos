@@ -15,6 +15,9 @@ public class TipoMovimiento {
     @Column(name = "nombre_tipo_movimiento")
     private String nombreTipoMovimiento;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToMany(mappedBy = "tipoMovimiento")
     private List<Movimiento> movimientos;
 
@@ -35,6 +38,14 @@ public class TipoMovimiento {
 
     public void setNombreTipoMovimiento(String nombreTipoMovimiento) {
         this.nombreTipoMovimiento = nombreTipoMovimiento;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public List<Movimiento> getMovimientos() {

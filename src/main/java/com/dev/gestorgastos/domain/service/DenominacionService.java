@@ -18,16 +18,25 @@ public class DenominacionService {
     public Optional<DenominacionDto> getByIdDenominacion(Integer idDenominacion){
         return denominacionRepository.getByIdDenominacion(idDenominacion);
     }
-    public Optional<List<DenominacionDto>> getByNombreDenominacionContains(String nombreDenominacion){
-        return denominacionRepository.getByNombreDenominacionContains(nombreDenominacion);
+    public Optional<List<DenominacionDto>> getActivosByNombreDenominacionContains(String nombreDenominacion){
+        return denominacionRepository.getActivosByNombreDenominacionContains(nombreDenominacion);
     }
-    public List<DenominacionDto> getAll() {
+    public Optional<List<DenominacionDto>> getInactivosByNombreDenominacionContains(String nombreDenominacion){
+        return denominacionRepository.getInactivosByNombreDenominacionContains(nombreDenominacion);
+    }
+    public Optional<List<DenominacionDto>> getAll() {
         return denominacionRepository.getAll();
+    }
+    public Optional<List<DenominacionDto>> getAllDeleted() {
+        return denominacionRepository.getAllDeleted();
     }
     public DenominacionDto save(DenominacionDto denominacionDto){
         return denominacionRepository.save(denominacionDto);
     }
     public boolean delete(Integer idDenominacion){
         return denominacionRepository.delete(idDenominacion);
+    }
+    public boolean unDelete(Integer idDenominacion){
+        return denominacionRepository.unDelete(idDenominacion);
     }
 }

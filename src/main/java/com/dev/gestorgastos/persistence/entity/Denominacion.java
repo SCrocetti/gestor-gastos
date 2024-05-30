@@ -15,6 +15,9 @@ public class Denominacion {
     @Column(name = "nombre_denominacion")
     private String nombreDenominacion;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToMany(mappedBy = "denominacion")
     private List<Cuenta> cuentas;
 
@@ -32,6 +35,14 @@ public class Denominacion {
 
     public void setNombreDenominacion(String nombreDenominacion) {
         this.nombreDenominacion = nombreDenominacion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public List<Cuenta> getCuentas() {

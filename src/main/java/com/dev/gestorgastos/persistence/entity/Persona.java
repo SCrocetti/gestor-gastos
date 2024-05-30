@@ -23,6 +23,8 @@ public class Persona {
     @Column(name = "apellidos", length = 100)
     private String apellidos;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
 
     @OneToMany(mappedBy = "persona")
     private List<Cuenta> cuentas;
@@ -57,6 +59,14 @@ public class Persona {
 
     public void setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public List<Cuenta> getCuentas() {

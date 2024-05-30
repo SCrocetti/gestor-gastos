@@ -1,5 +1,6 @@
 package com.dev.gestorgastos.web.controller;
 
+import com.dev.gestorgastos.domain.DenominacionDto;
 import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.domain.service.PersonaService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -46,13 +47,34 @@ public class PersonaController {
                 .map(persona-> new ResponseEntity<PersonaDto>(persona, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/all")
-    @Operation(summary = "Get all personas data", description = "Get the list of all Personas")
+    @GetMapping("/active")
+    @Operation(summary = "Get all active personas data", description = "Get the list of all active Personas")
     @ApiResponse(responseCode = "200", description = "OK")
-    public ResponseEntity<List<PersonaDto>> getAll() {
-        return new ResponseEntity<> (personaService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<PersonaDto>> getAllActive() {
+        return personaService.getAll()
+                .map(personas -> {
+                    if (personas.isEmpty()) {
+                        return new ResponseEntity<List<PersonaDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(personas, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+    @GetMapping("/unactive")
+    @Operation(summary = "Get all unactive personas data", description = "Get the list of all unactive Personas")
+    @ApiResponse(responseCode = "200", description = "OK")
+    public ResponseEntity<List<PersonaDto>> getAllUnactive() {
+        return personaService.getAllDeleted()
+                .map(personas -> {
+                    if (personas.isEmpty()) {
+                        return new ResponseEntity<List<PersonaDto>>(HttpStatus.NOT_FOUND);
+                    } else {
+                        return new ResponseEntity<>(personas, HttpStatus.OK);
+                    }
+                })
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     @PostMapping("/save")
     @Operation(summary = "Saves a persona", description = "Saves the data of a Persona")
     @ApiResponses({
@@ -77,5 +99,15 @@ public class PersonaController {
     })
     public ResponseEntity delete(@Parameter(description ="Id of the persona") @PathVariable("id") String personaId) {
         return  new ResponseEntity(personaService.delete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/undelete/{id}")
+    @Operation(summary = "Undeletes a persona by id", description = "Undeletes a persona by id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "Persona not found")
+    })
+    public ResponseEntity unDelete(@Parameter(description ="Id of the persona") @PathVariable("id") String personaId) {
+        return  new ResponseEntity(personaService.unDelete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

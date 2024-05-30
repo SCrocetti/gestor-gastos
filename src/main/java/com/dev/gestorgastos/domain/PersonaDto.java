@@ -9,14 +9,17 @@ public class PersonaDto {
 
     private String apellidos;
 
+    private boolean activo;
+
     public PersonaDto() {
     }
 
-    public PersonaDto(Integer idPersona, String numeroDocumento, String nombres, String apellidos) {
+    public PersonaDto(Integer idPersona, String numeroDocumento, String nombres, String apellidos, boolean activo) {
         this.idPersona = idPersona;
         this.numeroDocumento = numeroDocumento;
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.activo=activo;
     }
 
     public Integer getIdPersona() {
@@ -49,5 +52,13 @@ public class PersonaDto {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

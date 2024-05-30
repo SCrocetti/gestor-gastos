@@ -22,6 +22,9 @@ public class Plan {
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToMany(mappedBy = "plan")
     private List<Presupuesto> presupuestos;
 
@@ -55,6 +58,14 @@ public class Plan {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public List<Presupuesto> getPresupuestos() {

@@ -22,8 +22,11 @@ public class PersonaService {
         return personaRepository.getByNumeroDocumento(numeroDocumento);
     }
 
-    public List<PersonaDto> getAll() {
+    public Optional<List<PersonaDto>> getAll() {
         return personaRepository.getAll();
+    }
+    public Optional<List<PersonaDto>> getAllDeleted() {
+        return personaRepository.getAllDeleted();
     }
 
     public PersonaDto save(PersonaDto personaDto) {
@@ -32,5 +35,8 @@ public class PersonaService {
 
     public boolean delete(Integer personaId) {
         return personaRepository.delete(personaId);
+    }
+    public boolean unDelete(Integer personaId){
+        return personaRepository.unDelete(personaId);
     }
 }
