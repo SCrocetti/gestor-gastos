@@ -2,6 +2,7 @@ package com.dev.gestorgastos.persistence;
 import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.persistence.crud.PersonaCrudRepository;
 import com.dev.gestorgastos.domain.repository.PersonaDtoRepository;
+import com.dev.gestorgastos.persistence.mapper.PersonaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.dev.gestorgastos.persistence;
+package com.dev.gestorgastos.persistence.mapper;
 import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.persistence.entity.Persona;
 import org.mapstruct.Mapper;

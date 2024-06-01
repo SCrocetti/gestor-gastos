@@ -1,11 +1,9 @@
 package com.dev.gestorgastos.persistence;
 
-import com.dev.gestorgastos.domain.DenominacionDto;
 import com.dev.gestorgastos.domain.ProveedorDto;
-import com.dev.gestorgastos.domain.repository.DenominacionDtoRepository;
 import com.dev.gestorgastos.domain.repository.ProveedorDtoRepository;
-import com.dev.gestorgastos.persistence.crud.DenominacionCrudRepository;
 import com.dev.gestorgastos.persistence.crud.ProveedorCrudRepository;
+import com.dev.gestorgastos.persistence.mapper.ProveedorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

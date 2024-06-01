@@ -26,7 +26,7 @@ public class Cuenta {
     private Integer idProveedor;
 
     @Column(name = "id_denominacion")
-    private Integer idDenominacioon;
+    private Integer idDenominacion;
 
     @Column(name = "id_persona")
     private Integer idPersona;
@@ -100,12 +100,12 @@ public class Cuenta {
         this.idPersona = idPersona;
     }
 
-    public Integer getIdDenominacioon() {
-        return idDenominacioon;
+    public Integer getIdDenominacion() {
+        return idDenominacion;
     }
 
-    public void setIdDenominacioon(Integer idDenominacioon) {
-        this.idDenominacioon = idDenominacioon;
+    public void setIdDenominacion(Integer idDenominacion) {
+        this.idDenominacion = idDenominacion;
     }
 
     public Integer getIdProveedor() {
