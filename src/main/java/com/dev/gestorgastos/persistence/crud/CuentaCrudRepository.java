@@ -1,7 +1,6 @@
 package com.dev.gestorgastos.persistence.crud;
 
 import com.dev.gestorgastos.persistence.entity.Cuenta;
-import com.dev.gestorgastos.persistence.entity.Proveedor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,6 +21,6 @@ public interface CuentaCrudRepository extends CrudRepository<Cuenta,Integer> {
     Optional<List<Cuenta>> findByIdPersonaAndActivoTrueOrderByDescripcionAsc(Integer idPersona);
     @Transactional
     @Modifying
-    @Query("UPDATE Cuenta p SET p.activo = :activo WHERE p.idCuenta = :idCuenta")
+    @Query("UPDATE Cuenta c SET c.activo = :activo WHERE c.idCuenta = :idCuenta")
     void setActivoByIdCuenta(Integer idCuenta, boolean activo);
 }

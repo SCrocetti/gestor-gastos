@@ -1,6 +1,5 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.DenominacionDto;
 import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.domain.service.PersonaService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Optional;
 

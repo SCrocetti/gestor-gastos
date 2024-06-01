@@ -1,9 +1,7 @@
 package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.DenominacionDto;
-import com.dev.gestorgastos.domain.PersonaDto;
 import com.dev.gestorgastos.domain.service.DenominacionService;
-import com.dev.gestorgastos.domain.service.PersonaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
