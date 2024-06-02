@@ -1,7 +1,5 @@
 package com.dev.gestorgastos.persistence.mapper;
-import com.dev.gestorgastos.domain.ProveedorDto;
 import com.dev.gestorgastos.domain.TipoMovimientoDto;
-import com.dev.gestorgastos.persistence.entity.Proveedor;
 import com.dev.gestorgastos.persistence.entity.TipoMovimiento;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

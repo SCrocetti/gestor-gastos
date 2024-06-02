@@ -1,8 +1,6 @@
 package com.dev.gestorgastos.domain.service;
 
-import com.dev.gestorgastos.domain.DenominacionDto;
 import com.dev.gestorgastos.domain.ProveedorDto;
-import com.dev.gestorgastos.persistence.DenominacionRepository;
 import com.dev.gestorgastos.persistence.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

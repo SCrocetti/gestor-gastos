@@ -69,7 +69,10 @@ public class ProveedorController {
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active proveedores data", description = "Get the list of all active Proveedores")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Proveedor found")
+    })
     public ResponseEntity<List<ProveedorDto>> getAllActive() {
         return proveedorService.getAll()
                 .map(proveedores -> {
@@ -83,7 +86,10 @@ public class ProveedorController {
     }
     @GetMapping("/unactive")
     @Operation(summary = "Get all unactive proveedores data", description = "Get the list of all unactive Proveedores")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Proveedor found")
+    })
     public ResponseEntity<List<ProveedorDto>> getAllUnactive() {
         return proveedorService.getAllDeleted()
                 .map(proveedores -> {

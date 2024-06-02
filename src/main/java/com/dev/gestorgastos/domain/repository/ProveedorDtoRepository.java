@@ -1,5 +1,4 @@
 package com.dev.gestorgastos.domain.repository;
-import com.dev.gestorgastos.domain.DenominacionDto;
 import com.dev.gestorgastos.domain.ProveedorDto;
 
 import java.util.List;

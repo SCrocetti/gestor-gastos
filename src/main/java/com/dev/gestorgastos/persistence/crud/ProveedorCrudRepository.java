@@ -1,6 +1,5 @@
 package com.dev.gestorgastos.persistence.crud;
 
-import com.dev.gestorgastos.persistence.entity.Denominacion;
 import com.dev.gestorgastos.persistence.entity.Proveedor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -120,7 +120,10 @@ public class CuentaController {
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active cuentas data", description = "Get the list of all active Cuentas")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Cuenta found")
+    })
     public ResponseEntity<List<CuentaDto>> getAllActive() {
         return cuentaService.getAll()
                 .map(cuentas -> {
@@ -134,7 +137,10 @@ public class CuentaController {
     }
     @GetMapping("/unactive")
     @Operation(summary = "Get all unactive cuentas data", description = "Get the list of all unactive Cuentas")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Cuenta found")
+    })
     public ResponseEntity<List<CuentaDto>> getAllUnactive() {
         return cuentaService.getAllDeleted()
                 .map(cuentas -> {

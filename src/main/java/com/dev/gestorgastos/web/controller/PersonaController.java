@@ -47,7 +47,10 @@ public class PersonaController {
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active personas data", description = "Get the list of all active Personas")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Persona found")
+    })
     public ResponseEntity<List<PersonaDto>> getAllActive() {
         return personaService.getAll()
                 .map(personas -> {
@@ -61,7 +64,10 @@ public class PersonaController {
     }
     @GetMapping("/unactive")
     @Operation(summary = "Get all unactive personas data", description = "Get the list of all unactive Personas")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Persona found")
+    })
     public ResponseEntity<List<PersonaDto>> getAllUnactive() {
         return personaService.getAllDeleted()
                 .map(personas -> {

@@ -71,7 +71,10 @@ public class TipoMovimientoController {
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active tiposMovimiento data", description = "Get the list of all active TiposMovimiento")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No TipoMovimiento found")
+    })
     public ResponseEntity<List<TipoMovimientoDto>> getAllActive() {
         return tipoMovimientoService.getAll()
                 .map(tiposMovimiento -> {
@@ -85,7 +88,10 @@ public class TipoMovimientoController {
     }
     @GetMapping("/unactive")
     @Operation(summary = "Get all unactive tiposMovimiento data", description = "Get the list of all unactive TiposMovimiento")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No TipoMovimiento found")
+    })
     public ResponseEntity<List<TipoMovimientoDto>> getAllUnactive() {
         return tipoMovimientoService.getAllDeleted()
                 .map(tiposMovimiento -> {

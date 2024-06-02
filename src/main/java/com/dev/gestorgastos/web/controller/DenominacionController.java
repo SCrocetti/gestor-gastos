@@ -71,7 +71,10 @@ public class DenominacionController {
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active denominaciones data", description = "Get the list of all active Denominaciones")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Denominacion found")
+    })
     public ResponseEntity<List<DenominacionDto>> getAllActive() {
         return denominacionService.getAll()
                 .map(denominaciones -> {
@@ -85,7 +88,10 @@ public class DenominacionController {
     }
     @GetMapping("/unactive")
     @Operation(summary = "Get all unactive denominaciones data", description = "Get the list of all unactive Denominaciones")
-    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "No Denominacion found")
+    })
     public ResponseEntity<List<DenominacionDto>> getAllUnactive() {
         return denominacionService.getAllDeleted()
                 .map(denominaciones -> {
