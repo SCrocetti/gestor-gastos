@@ -16,9 +16,9 @@ public interface CuentaCrudRepository extends CrudRepository<Cuenta,Integer> {
     Optional<List<Cuenta>> findByDescripcionContainingAndActivoFalseOrderByDescripcionAsc(String descripcion);
     Optional<List<Cuenta>> findAllByActivoTrueOrderByDescripcionAsc();
     Optional<List<Cuenta>> findAllByActivoFalseOrderByDescripcionAsc();
-    Optional<List<Cuenta>> findByIdProveedorAndActivoTrueOrderByDescripcionAsc(Integer idProveedor);
-    Optional<List<Cuenta>> findByIdDenominacionAndActivoTrueOrderByDescripcionAsc(Integer idDenominacion);
-    Optional<List<Cuenta>> findByIdPersonaAndActivoTrueOrderByDescripcionAsc(Integer idPersona);
+    Optional<List<Cuenta>> findByIdProveedorAndActivoTrueOrderByProveedorNombreProveedorAscDescripcionAsc(Integer idProveedor);
+    Optional<List<Cuenta>> findByIdDenominacionAndActivoTrueOrderByDenominacionNombreDenominacionAscDescripcionAsc(Integer idDenominacion);
+    Optional<List<Cuenta>> findByIdPersonaAndActivoTrueOrderByPersonaNombresAscPersonaApellidosAscDescripcionAsc(Integer idPersona);
     @Transactional
     @Modifying
     @Query("UPDATE Cuenta c SET c.activo = :activo WHERE c.idCuenta = :idCuenta")

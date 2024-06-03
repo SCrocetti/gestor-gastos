@@ -32,17 +32,17 @@ public class CuentaRepository implements CuentaDtoRepository {
 
     @Override
     public Optional<List<CuentaDto>> getActivosByIdProveedor(Integer idProveedor) {
-        return cuentaCrudRepository.findByIdProveedorAndActivoTrueOrderByDescripcionAsc(idProveedor).map(CuentaMapper.INSTANCE::toDtos);
+        return cuentaCrudRepository.findByIdProveedorAndActivoTrueOrderByProveedorNombreProveedorAscDescripcionAsc(idProveedor).map(CuentaMapper.INSTANCE::toDtos);
     }
 
     @Override
     public Optional<List<CuentaDto>> getActivosByIdDenominacion(Integer idDenominacion) {
-        return cuentaCrudRepository.findByIdDenominacionAndActivoTrueOrderByDescripcionAsc(idDenominacion).map(CuentaMapper.INSTANCE::toDtos);
+        return cuentaCrudRepository.findByIdDenominacionAndActivoTrueOrderByDenominacionNombreDenominacionAscDescripcionAsc(idDenominacion).map(CuentaMapper.INSTANCE::toDtos);
     }
 
     @Override
     public Optional<List<CuentaDto>> getActivosByIdPersona(Integer idPersona) {
-        return cuentaCrudRepository.findByIdPersonaAndActivoTrueOrderByDescripcionAsc(idPersona).map(CuentaMapper.INSTANCE::toDtos);
+        return cuentaCrudRepository.findByIdPersonaAndActivoTrueOrderByPersonaNombresAscPersonaApellidosAscDescripcionAsc(idPersona).map(CuentaMapper.INSTANCE::toDtos);
     }
 
     @Override
