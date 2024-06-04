@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.domain.repository;
-import com.dev.gestorgastos.domain.TipoMovimientoDto;
+import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 
 import java.util.List;
 import java.util.Optional;

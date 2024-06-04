@@ -1,4 +1,4 @@
-package com.dev.gestorgastos.domain;
+package com.dev.gestorgastos.domain.dto;
 
 public class CuentaDto {
     private Integer idCuenta;

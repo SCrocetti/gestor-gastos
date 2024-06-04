@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.domain.repository;
-import com.dev.gestorgastos.domain.ProveedorDto;
+import com.dev.gestorgastos.domain.dto.ProveedorDto;
 
 import java.util.List;
 import java.util.Optional;

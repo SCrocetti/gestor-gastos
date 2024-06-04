@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.CuentaDto;
+import com.dev.gestorgastos.domain.dto.CuentaDto;
 import com.dev.gestorgastos.domain.service.CuentaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

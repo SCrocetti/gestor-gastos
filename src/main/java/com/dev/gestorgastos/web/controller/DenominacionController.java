@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.DenominacionDto;
+import com.dev.gestorgastos.domain.dto.DenominacionDto;
 import com.dev.gestorgastos.domain.service.DenominacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 // se le indica el path que le corresponde a este controller

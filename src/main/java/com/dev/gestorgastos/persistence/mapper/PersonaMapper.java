@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.persistence.mapper;
-import com.dev.gestorgastos.domain.PersonaDto;
+import com.dev.gestorgastos.domain.dto.PersonaDto;
 import com.dev.gestorgastos.persistence.entity.Persona;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.domain.repository;
-import com.dev.gestorgastos.domain.PersonaDto;
+import com.dev.gestorgastos.domain.dto.PersonaDto;
 
 import java.util.List;
 import java.util.Optional;

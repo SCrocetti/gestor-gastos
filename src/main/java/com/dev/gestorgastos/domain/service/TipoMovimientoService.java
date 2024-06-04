@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.domain.service;
 
-import com.dev.gestorgastos.domain.TipoMovimientoDto;
+import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.persistence.TipoMovimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

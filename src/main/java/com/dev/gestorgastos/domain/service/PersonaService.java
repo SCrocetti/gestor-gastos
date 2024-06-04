@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.domain.service;
 
-import com.dev.gestorgastos.domain.PersonaDto;
+import com.dev.gestorgastos.domain.dto.PersonaDto;
 import com.dev.gestorgastos.persistence.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

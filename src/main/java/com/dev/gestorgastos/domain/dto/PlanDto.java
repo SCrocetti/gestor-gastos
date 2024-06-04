@@ -1,6 +1,4 @@
-package com.dev.gestorgastos.domain;
-
-import jakarta.persistence.Column;
+package com.dev.gestorgastos.domain.dto;
 
 import java.time.LocalDate;
 

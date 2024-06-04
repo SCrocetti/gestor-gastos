@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.persistence;
 
-import com.dev.gestorgastos.domain.PresupuestoDto;
+import com.dev.gestorgastos.domain.dto.PresupuestoDto;
 import com.dev.gestorgastos.domain.repository.PresupuestoDtoRepository;
 import com.dev.gestorgastos.persistence.crud.PresupuestoCrudRepository;
 import com.dev.gestorgastos.persistence.mapper.PresupuestoMapper;

@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.persistence;
 
-import com.dev.gestorgastos.domain.TipoMovimientoDto;
+import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.repository.TipoMovimientoDtoRepository;
 import com.dev.gestorgastos.persistence.crud.TipoMovimientoCrudRepository;
 import com.dev.gestorgastos.persistence.mapper.TipoMovimientoMapper;

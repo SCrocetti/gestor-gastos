@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.domain.service;
 
-import com.dev.gestorgastos.domain.PlanDto;
+import com.dev.gestorgastos.domain.dto.PlanDto;
 import com.dev.gestorgastos.persistence.PlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

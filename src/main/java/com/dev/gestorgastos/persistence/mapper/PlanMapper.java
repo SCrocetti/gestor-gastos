@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.persistence.mapper;
-import com.dev.gestorgastos.domain.PlanDto;
+import com.dev.gestorgastos.domain.dto.PlanDto;
 import com.dev.gestorgastos.persistence.entity.Plan;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

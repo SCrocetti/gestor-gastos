@@ -1,8 +1,6 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.ProveedorDto;
-import com.dev.gestorgastos.domain.TipoMovimientoDto;
-import com.dev.gestorgastos.domain.service.ProveedorService;
+import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.service.TipoMovimientoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,5 +1,5 @@
 package com.dev.gestorgastos.domain.repository;
-import com.dev.gestorgastos.domain.PlanDto;
+import com.dev.gestorgastos.domain.dto.PlanDto;
 
 import java.time.LocalDate;
 import java.util.List;

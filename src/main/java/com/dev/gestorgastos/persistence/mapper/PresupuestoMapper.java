@@ -1,8 +1,6 @@
 package com.dev.gestorgastos.persistence.mapper;
-import com.dev.gestorgastos.domain.PresupuestoDto;
-import com.dev.gestorgastos.domain.TipoMovimientoDto;
+import com.dev.gestorgastos.domain.dto.PresupuestoDto;
 import com.dev.gestorgastos.persistence.entity.Presupuesto;
-import com.dev.gestorgastos.persistence.entity.TipoMovimiento;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

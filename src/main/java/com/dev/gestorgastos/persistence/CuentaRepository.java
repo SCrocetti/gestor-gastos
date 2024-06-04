@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.persistence;
 
-import com.dev.gestorgastos.domain.CuentaDto;
+import com.dev.gestorgastos.domain.dto.CuentaDto;
 import com.dev.gestorgastos.domain.repository.CuentaDtoRepository;
 import com.dev.gestorgastos.persistence.crud.CuentaCrudRepository;
 import com.dev.gestorgastos.persistence.mapper.CuentaMapper;
