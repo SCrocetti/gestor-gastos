@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "presupuestos")
-public class Presupuesto {
+@Table(name = "presupuestos_movimientos")
+public class PresupuestoMovimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_presupuesto")
-    private Integer idPresupuesto;
+    @Column(name = "id_presupuesto_movimiento")
+    private Integer idPresupuestoMovimiento;
 
 
     @Column(name = "monto_asignado")
@@ -43,15 +43,15 @@ public class Presupuesto {
     @JoinColumn(name = "id_plan",insertable = false,updatable = false)
     private Plan plan;
 
-    @OneToMany(mappedBy = "presupuesto")
+    @OneToMany(mappedBy = "presupuestoMovimiento")
     private List<Movimiento> movimientos;
 
-    public Integer getIdPresupuesto() {
-        return idPresupuesto;
+    public Integer getIdPresupuestoMovimiento() {
+        return idPresupuestoMovimiento;
     }
 
-    public void setIdPresupuesto(Integer idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+    public void setIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
     }
 
     public Long getMontoEjecutado() {

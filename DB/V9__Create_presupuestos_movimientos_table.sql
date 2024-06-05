@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS presupuestos (
-    id_presupuesto SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS presupuestos_movimientos (
+    id_presupuesto_movimiento SERIAL PRIMARY KEY,
     monto_asignado BIGINT,
     monto_ejecutado BIGINT,
     id_tipo_movimiento INTEGER REFERENCES tipos_movimiento(id_tipo_movimiento) , 

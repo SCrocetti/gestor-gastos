@@ -25,8 +25,8 @@ public class Movimiento {
     @Column(name = "id_cuenta")
     private Integer idCuenta;
 
-    @Column(name = "id_presupuesto")
-    private Integer idPresupuesto;
+    @Column(name = "id_presupuesto_movimiento")
+    private Integer idPresupuestoMovimiento;
 
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
@@ -39,16 +39,9 @@ public class Movimiento {
     @JoinColumn(name = "id_cuenta",insertable = false,updatable = false)
     private Cuenta cuenta;
 
-
-    @OneToOne(mappedBy = "egreso")
-    private Transaccion transaccionEgreso;
-
-    @OneToOne(mappedBy = "ingreso")
-    private Transaccion transaccionIngreso;
-
     @ManyToOne
-    @JoinColumn(name = "id_presupuesto",insertable = false,updatable = false)
-    private Presupuesto presupuesto;
+    @JoinColumn(name = "id_presupuesto_movimiento",insertable = false,updatable = false)
+    private PresupuestoMovimiento presupuestoMovimiento;
 
     public Integer getIdMovimiento() {
         return idMovimiento;
@@ -98,12 +91,12 @@ public class Movimiento {
         this.tipoMovimiento = tipoMovimiento;
     }
 
-    public Integer getIdPresupuesto() {
-        return idPresupuesto;
+    public Integer getIdPresupuestoMovimiento() {
+        return idPresupuestoMovimiento;
     }
 
-    public void setIdPresupuesto(Integer idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+    public void setIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
     }
 
     public boolean isActivo() {
@@ -122,27 +115,12 @@ public class Movimiento {
         this.cuenta = cuenta;
     }
 
-    public Transaccion getTransaccionEgreso() {
-        return transaccionEgreso;
+    public PresupuestoMovimiento getPresupuestoMovimiento() {
+        return presupuestoMovimiento;
     }
 
-    public void setTransaccionEgreso(Transaccion transaccionEgreso) {
-        this.transaccionEgreso = transaccionEgreso;
+    public void setPresupuestoMovimiento(PresupuestoMovimiento presupuestoMovimiento) {
+        this.presupuestoMovimiento = presupuestoMovimiento;
     }
 
-    public Transaccion getTransaccionIngreso() {
-        return transaccionIngreso;
-    }
-
-    public void setTransaccionIngreso(Transaccion transaccionIngreso) {
-        this.transaccionIngreso = transaccionIngreso;
-    }
-
-    public Presupuesto getPresupuesto() {
-        return presupuesto;
-    }
-
-    public void setPresupuesto(Presupuesto presupuesto) {
-        this.presupuesto = presupuesto;
-    }
 }

@@ -2,6 +2,7 @@ package com.dev.gestorgastos.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,81 +11,48 @@ public class Transaccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_transaccion")
-    private Integer idPais;
+    private Integer idTransaccion;
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "monto_egreso")
+    private Long montoEgreso;
 
-    @Column(name = "id_egreso", insertable = false, updatable = false)
-    private Integer idEgreso;
+    @Column(name = "monto_ingreso")
+    private Long montoIngreso;
 
-    @Column(name = "id_ingreso", insertable = false, updatable = false)
-    private Integer idIngreso;
+    @Column(name = "id_cuenta_egreso", insertable = false, updatable = false)
+    private Integer idCuentaEgreso;
+
+    @Column(name = "id_cuenta_ingreso", insertable = false, updatable = false)
+    private Integer idCuentaIngreso;
+
+    @Column(name = "fecha_hora")
+    private LocalDateTime fechaHora;
+
+    @Column(name = "id_tipo_transaccion")
+    private Integer idTipoTransaccion;
+
+    @Column(name = "id_presupuesto_transaccion")
+    private Integer idPresupuestoTransaccion;
 
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
 
-    @OneToOne
-    @JoinColumn(name = "id_egreso", referencedColumnName = "id_movimiento")
-    private Movimiento egreso;
 
-    @OneToOne
-    @JoinColumn(name = "id_ingreso", referencedColumnName = "id_movimiento")
-    private Movimiento ingreso;
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_transaccion",insertable = false,updatable = false)
+    private TipoTransaccion tipoTransaccion;
 
-    public Integer getIdPais() {
-        return idPais;
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_cuenta_egreso",insertable = false,updatable = false)
+    private Cuenta cuentaEgreso;
 
-    public void setIdPais(Integer idPais) {
-        this.idPais = idPais;
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_cuenta_ingreso",insertable = false,updatable = false)
+    private Cuenta cuentaIngreso;
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_presupuesto_transaccion",insertable = false,updatable = false)
+    private PresupuestoTransaccion presupuestoTransaccion;
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
-    public Integer getIdEgreso() {
-        return idEgreso;
-    }
-
-    public void setIdEgreso(Integer idEgreso) {
-        this.idEgreso = idEgreso;
-    }
-
-    public Integer getIdIngreso() {
-        return idIngreso;
-    }
-
-    public void setIdIngreso(Integer idIngreso) {
-        this.idIngreso = idIngreso;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    public Movimiento getEgreso() {
-        return egreso;
-    }
-
-    public void setEgreso(Movimiento egreso) {
-        this.egreso = egreso;
-    }
-
-    public Movimiento getIngreso() {
-        return ingreso;
-    }
-
-    public void setIngreso(Movimiento ingreso) {
-        this.ingreso = ingreso;
-    }
 }

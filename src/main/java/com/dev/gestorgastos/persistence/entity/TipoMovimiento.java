@@ -22,7 +22,7 @@ public class TipoMovimiento {
     private List<Movimiento> movimientos;
 
     @OneToMany(mappedBy = "tipoMovimiento")
-    private List<Presupuesto> presupuestos;
+    private List<PresupuestoMovimiento> presupuestosMovimientos;
 
     public Integer getIdTipoMovimiento() {
         return idTipoMovimiento;
@@ -56,11 +56,11 @@ public class TipoMovimiento {
         this.movimientos = movimientos;
     }
 
-    public List<Presupuesto> getPresupuestos() {
-        return presupuestos;
+    public List<PresupuestoMovimiento> getPresupuestosMovimientos() {
+        return presupuestosMovimientos;
     }
 
-    public void setPresupuestos(List<Presupuesto> presupuestos) {
-        this.presupuestos = presupuestos;
+    public void setPresupuestosMovimientos(List<PresupuestoMovimiento> presupuestosMovimientos) {
+        this.presupuestosMovimientos = presupuestosMovimientos;
     }
 }
