@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.dto.PresupuestoDto;
+import com.dev.gestorgastos.domain.dto.PresupuestoMovimientoDto;
 import com.dev.gestorgastos.domain.service.PresupuestoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,9 +27,9 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Presupuesto not found")
     })
-    public ResponseEntity<PresupuestoDto> getByIdPresupuesto(@Parameter(description = "Id of the presupuesto") @PathVariable("id")  String idPresupuesto) {
+    public ResponseEntity<PresupuestoMovimientoDto> getByIdPresupuesto(@Parameter(description = "Id of the presupuesto") @PathVariable("id")  String idPresupuesto) {
         return presupuestoService.getByIdPresupuesto(Integer.parseInt(idPresupuesto))
-                .map(presupuesto-> new ResponseEntity<PresupuestoDto>(presupuesto, HttpStatus.OK))
+                .map(presupuesto-> new ResponseEntity<PresupuestoMovimientoDto>(presupuesto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -39,11 +39,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getActivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
         return presupuestoService.getActivosByNombreTipoMovimiento(nombreTipoMovimiento)
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -56,11 +56,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getInactivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getInactivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
         return presupuestoService.getInactivosByNombreTipoMovimiento(nombreTipoMovimiento)
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -74,11 +74,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getActivosByIdTipoMovimiento(@Parameter(description ="Id of the tipoMovimiento of the presupuesto") @PathVariable("idTipoMovimiento") String idTipoMovimiento) {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdTipoMovimiento(@Parameter(description ="Id of the tipoMovimiento of the presupuesto") @PathVariable("idTipoMovimiento") String idTipoMovimiento) {
         return presupuestoService.getActivosByIdTipoMovimiento(Integer.parseInt(idTipoMovimiento))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -91,11 +91,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getActivosByIdCuenta(@Parameter(description ="Id of the cuenta of the presupuesto") @PathVariable("idCuenta") String idCuenta) {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdCuenta(@Parameter(description ="Id of the cuenta of the presupuesto") @PathVariable("idCuenta") String idCuenta) {
         return presupuestoService.getActivosByIdCuenta(Integer.parseInt(idCuenta))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -109,11 +109,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getActivosByIdPlan(@Parameter(description ="Id of the plan of the presupuesto") @PathVariable("idPlan") String idPlan) {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdPlan(@Parameter(description ="Id of the plan of the presupuesto") @PathVariable("idPlan") String idPlan) {
         return presupuestoService.getActivosByIdPlan(Integer.parseInt(idPlan))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -126,11 +126,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getAllActive() {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getAllActive() {
         return presupuestoService.getAll()
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -143,11 +143,11 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
-    public ResponseEntity<List<PresupuestoDto>> getAllUnactive() {
+    public ResponseEntity<List<PresupuestoMovimientoDto>> getAllUnactive() {
         return presupuestoService.getAllDeleted()
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
-                        return new ResponseEntity<List<PresupuestoDto>>(HttpStatus.NOT_FOUND);
+                        return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
                     } else {
                         return new ResponseEntity<>(presupuestos, HttpStatus.OK);
                     }
@@ -158,8 +158,8 @@ public class PresupuestoController {
     @PostMapping("/save")
     @Operation(summary = "Saves a presupuesto", description = "Saves the data of a presupuesto")
     @ApiResponse(responseCode = "201", description = "Created")
-    public ResponseEntity<PresupuestoDto> save(@RequestBody PresupuestoDto presupuestoDto) {
-        return new ResponseEntity<>(presupuestoService.save(presupuestoDto), HttpStatus.CREATED);
+    public ResponseEntity<PresupuestoMovimientoDto> save(@RequestBody PresupuestoMovimientoDto presupuestoMovimientoDto) {
+        return new ResponseEntity<>(presupuestoService.save(presupuestoMovimientoDto), HttpStatus.CREATED);
     }
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Deletes a presupuesto by id", description = "Deletes a presupuesto by id")

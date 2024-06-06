@@ -31,6 +31,10 @@ public class Cuenta {
     @Column(name = "id_persona")
     private Integer idPersona;
 
+
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @ManyToOne
     @JoinColumn(name = "id_proveedor",insertable = false,updatable = false)
     private Proveedor proveedor;
@@ -43,116 +47,24 @@ public class Cuenta {
     @JoinColumn(name = "id_persona",insertable = false,updatable = false)
     private Persona persona;
 
-    @Column(name = "activo", nullable = false)
-    private boolean activo = true;
+
+    @OneToMany(mappedBy = "cuenta")
+    private List<PresupuestoMovimiento> presupuestosMovimientos;
+
+    @OneToMany(mappedBy = "cuentaEgreso")
+    private List<PresupuestoTransaccion> presupuestosTransaccionesEgresos;
+
+    @OneToMany(mappedBy = "cuentaIngreso")
+    private List<PresupuestoTransaccion> presupuestosTransaccionesIngresos;
 
     @OneToMany(mappedBy = "cuenta")
     private List<Movimiento> movimientos;
 
-    @OneToMany(mappedBy = "cuenta")
-    private List<Presupuesto> presupuestos;
+    @OneToMany(mappedBy = "cuentaEgreso")
+    private List<Transaccion> transaccionesEgresos;
 
-    public List<Presupuesto> getPresupuestos() {
-        return presupuestos;
-    }
+    @OneToMany(mappedBy = "cuentaIngreso")
+    private List<Transaccion> transaccionesIngresos;
 
-    public void setPresupuestos(List<Presupuesto> presupuestos) {
-        this.presupuestos = presupuestos;
-    }
 
-    public List<Movimiento> getMovimientos() {
-        return movimientos;
-    }
-
-    public void setMovimientos(List<Movimiento> movimientos) {
-        this.movimientos = movimientos;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
-    public Denominacion getDenominacion() {
-        return denominacion;
-    }
-
-    public void setDenominacion(Denominacion denominacion) {
-        this.denominacion = denominacion;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public Integer getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
-    }
-
-    public Integer getIdDenominacion() {
-        return idDenominacion;
-    }
-
-    public void setIdDenominacion(Integer idDenominacion) {
-        this.idDenominacion = idDenominacion;
-    }
-
-    public Integer getIdProveedor() {
-        return idProveedor;
-    }
-
-    public void setIdProveedor(Integer idProveedor) {
-        this.idProveedor = idProveedor;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    public Long getFondos() {
-        return fondos;
-    }
-
-    public void setFondos(Long fondos) {
-        this.fondos = fondos;
-    }
-
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Integer getIdCuenta() {
-        return idCuenta;
-    }
-
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
-    }
 }

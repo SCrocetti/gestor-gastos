@@ -1,64 +1,43 @@
-package com.dev.gestorgastos.persistence.entity;
+package com.dev.gestorgastos.domain.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
-import java.util.List;
-
-@Entity
-@Table(name = "presupuestos_transacciones")
-public class PresupuestoTransaccion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_presupuesto_transaccion")
+public class PresupuestoTransaccionDto {
     private Integer idPresupuestoTransaccion;
 
-
-    @Column(name = "monto_debitar")
     private Long montoDebitar;
 
-    @Column(name = "monto_debitado")
     private Long montoDebitado;
 
-    @Column(name = "monto_acreditar")
     private Long montoAcreditar;
 
-    @Column(name = "monto_acreditado")
     private Long montoAcreditado;
 
-    @Column(name = "id_cuenta_egreso")
     private Integer idCuentaEgreso;
 
-    @Column(name = "id_cuenta_ingreso")
     private Integer idCuentaIngreso;
 
-    @Column(name = "id_tipo_transaccion")
     private Integer idTipoTransaccion;
 
-
-    @Column(name = "id_plan")
     private Integer idPlan;
 
-    @Column(name = "activo", nullable = false)
     private boolean activo = true;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_transaccion",insertable = false,updatable = false)
-    private TipoTransaccion tipoTransaccion;
+    public PresupuestoTransaccionDto() {
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "id_cuenta_egreso",insertable = false,updatable = false)
-    private Cuenta cuentaEgreso;
-
-    @ManyToOne
-    @JoinColumn(name = "id_cuenta_ingreso",insertable = false,updatable = false)
-    private Cuenta cuentaIngreso;
-
-    @ManyToOne
-    @JoinColumn(name = "id_plan",insertable = false,updatable = false)
-    private Plan plan;
-
-    @OneToMany(mappedBy = "presupuestoTransaccion")
-    private List<Transaccion> transacciones;
+    public PresupuestoTransaccionDto(Integer idPresupuestoTransaccion, Long montoDebitar, Long montoDebitado, Long montoAcreditar, Long montoAcreditado, Integer idCuentaEgreso, Integer idCuentaIngreso, Integer idTipoTransaccion, Integer idPlan, boolean activo) {
+        this.idPresupuestoTransaccion = idPresupuestoTransaccion;
+        this.montoDebitar = montoDebitar;
+        this.montoDebitado = montoDebitado;
+        this.montoAcreditar = montoAcreditar;
+        this.montoAcreditado = montoAcreditado;
+        this.idCuentaEgreso = idCuentaEgreso;
+        this.idCuentaIngreso = idCuentaIngreso;
+        this.idTipoTransaccion = idTipoTransaccion;
+        this.idPlan = idPlan;
+        this.activo = activo;
+    }
 
     public Integer getIdPresupuestoTransaccion() {
         return idPresupuestoTransaccion;
@@ -138,47 +117,5 @@ public class PresupuestoTransaccion {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-
-
-    public Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(Plan plan) {
-        this.plan = plan;
-    }
-
-    public TipoTransaccion getTipoTransaccion() {
-        return tipoTransaccion;
-    }
-
-    public void setTipoTransaccion(TipoTransaccion tipoTransaccion) {
-        this.tipoTransaccion = tipoTransaccion;
-    }
-
-    public Cuenta getCuentaEgreso() {
-        return cuentaEgreso;
-    }
-
-    public void setCuentaEgreso(Cuenta cuentaEgreso) {
-        this.cuentaEgreso = cuentaEgreso;
-    }
-
-    public Cuenta getCuentaIngreso() {
-        return cuentaIngreso;
-    }
-
-    public void setCuentaIngreso(Cuenta cuentaIngreso) {
-        this.cuentaIngreso = cuentaIngreso;
-    }
-
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
-    }
-
-    public void setTransacciones(List<Transaccion> transacciones) {
-        this.transacciones = transacciones;
     }
 }

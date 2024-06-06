@@ -1,7 +1,7 @@
 package com.dev.gestorgastos.domain.dto;
 
-public class PresupuestoDto {
-    private Integer idPresupuesto;
+public class PresupuestoMovimientoDto {
+    private Integer idPresupuestoMovimiento;
 
     private Long montoAsignado;
 
@@ -15,11 +15,11 @@ public class PresupuestoDto {
 
     private boolean activo = true;
 
-    public PresupuestoDto() {
+    public PresupuestoMovimientoDto() {
     }
 
-    public PresupuestoDto(Integer idPresupuesto, Long montoAsignado, Long montoEjecutado, Integer idTipoMovimiento, Integer idPlan, Integer idCuenta, boolean activo) {
-        this.idPresupuesto = idPresupuesto;
+    public PresupuestoMovimientoDto(Integer idPresupuestoMovimiento, Long montoAsignado, Long montoEjecutado, Integer idTipoMovimiento, Integer idPlan, Integer idCuenta, boolean activo) {
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
         this.montoAsignado = montoAsignado;
         this.montoEjecutado = montoEjecutado;
         this.idTipoMovimiento = idTipoMovimiento;
@@ -28,12 +28,12 @@ public class PresupuestoDto {
         this.activo = activo;
     }
 
-    public Integer getIdPresupuesto() {
-        return idPresupuesto;
+    public Integer getIdPresupuestoMovimiento() {
+        return idPresupuestoMovimiento;
     }
 
-    public void setIdPresupuesto(Integer idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+    public void setIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
     }
 
     public Long getMontoAsignado() {

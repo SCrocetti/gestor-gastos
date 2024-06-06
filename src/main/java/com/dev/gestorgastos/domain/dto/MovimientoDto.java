@@ -14,20 +14,20 @@ public class MovimientoDto {
 
     private Integer idCuenta;
 
-    private Integer idPresupuesto;
+    private Integer idPresupuestoMovimiento;
 
     private boolean activo;
 
     public MovimientoDto() {
     }
 
-    public MovimientoDto(Integer idMovimiento, Long monto, LocalDateTime fechaHora, Integer idTipoMovimiento, Integer idCuenta, Integer idPresupuesto, boolean activo) {
+    public MovimientoDto(Integer idMovimiento, Long monto, LocalDateTime fechaHora, Integer idTipoMovimiento, Integer idCuenta, Integer idPresupuestoMovimiento, boolean activo) {
         this.idMovimiento = idMovimiento;
         this.monto = monto;
         this.fechaHora = fechaHora;
         this.idTipoMovimiento = idTipoMovimiento;
         this.idCuenta = idCuenta;
-        this.idPresupuesto = idPresupuesto;
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
         this.activo = activo;
     }
 
@@ -71,12 +71,12 @@ public class MovimientoDto {
         this.idCuenta = idCuenta;
     }
 
-    public Integer getIdPresupuesto() {
-        return idPresupuesto;
+    public Integer getIdPresupuestoMovimiento() {
+        return idPresupuestoMovimiento;
     }
 
-    public void setIdPresupuesto(Integer idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+    public void setIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        this.idPresupuestoMovimiento = idPresupuestoMovimiento;
     }
 
     public boolean isActivo() {

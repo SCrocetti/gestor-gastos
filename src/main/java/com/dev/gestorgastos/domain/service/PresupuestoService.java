@@ -1,6 +1,6 @@
 package com.dev.gestorgastos.domain.service;
 
-import com.dev.gestorgastos.domain.dto.PresupuestoDto;
+import com.dev.gestorgastos.domain.dto.PresupuestoMovimientoDto;
 import com.dev.gestorgastos.persistence.PresupuestoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,40 +13,40 @@ public class PresupuestoService {
     @Autowired
     PresupuestoRepository presupuestoRepository;
 
-    public Optional<PresupuestoDto> getByIdPresupuesto(Integer idPresupuesto) {
+    public Optional<PresupuestoMovimientoDto> getByIdPresupuesto(Integer idPresupuesto) {
         return presupuestoRepository.getByIdPresupuesto(idPresupuesto);
     }
 
-    public Optional<List<PresupuestoDto>> getActivosByNombreTipoMovimiento(String nombreTipoMovimiento) {
+    public Optional<List<PresupuestoMovimientoDto>> getActivosByNombreTipoMovimiento(String nombreTipoMovimiento) {
         return presupuestoRepository.getActivosByNombreTipoMovimientoContains(nombreTipoMovimiento);
     }
 
-    public Optional<List<PresupuestoDto>> getInactivosByNombreTipoMovimiento(String nombreTipoMovimiento) {
+    public Optional<List<PresupuestoMovimientoDto>> getInactivosByNombreTipoMovimiento(String nombreTipoMovimiento) {
         return presupuestoRepository.getInactivosByNombreTipoMovimientoContains(nombreTipoMovimiento);
     }
 
-    public Optional<List<PresupuestoDto>> getActivosByIdTipoMovimiento(Integer idTipoMovimiento) {
+    public Optional<List<PresupuestoMovimientoDto>> getActivosByIdTipoMovimiento(Integer idTipoMovimiento) {
         return presupuestoRepository.getActivosByIdTipoMovimiento(idTipoMovimiento);
     }
 
-    public Optional<List<PresupuestoDto>> getActivosByIdCuenta(Integer idCuenta) {
+    public Optional<List<PresupuestoMovimientoDto>> getActivosByIdCuenta(Integer idCuenta) {
         return presupuestoRepository.getActivosByIdCuenta(idCuenta);
     }
 
-    public Optional<List<PresupuestoDto>> getActivosByIdPlan(Integer idPlan) {
+    public Optional<List<PresupuestoMovimientoDto>> getActivosByIdPlan(Integer idPlan) {
         return presupuestoRepository.getActivosByIdPlan(idPlan);
     }
 
-    public Optional<List<PresupuestoDto>> getAll() {
+    public Optional<List<PresupuestoMovimientoDto>> getAll() {
         return presupuestoRepository.getAll();
     }
 
-    public Optional<List<PresupuestoDto>> getAllDeleted() {
+    public Optional<List<PresupuestoMovimientoDto>> getAllDeleted() {
         return presupuestoRepository.getAllDeleted();
     }
 
-    public PresupuestoDto save(PresupuestoDto presupuestoDto) {
-        return presupuestoRepository.save(presupuestoDto);
+    public PresupuestoMovimientoDto save(PresupuestoMovimientoDto presupuestoMovimientoDto) {
+        return presupuestoRepository.save(presupuestoMovimientoDto);
     }
 
     public boolean delete(Integer idPresupuesto) {

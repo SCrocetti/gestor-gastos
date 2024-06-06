@@ -26,7 +26,10 @@ public class Plan {
     private boolean activo = true;
 
     @OneToMany(mappedBy = "plan")
-    private List<Presupuesto> presupuestos;
+    private List<PresupuestoMovimiento> presupuestosMovimientos;
+
+    @OneToMany(mappedBy = "plan")
+    private List<PresupuestoTransaccion> presupuestosTransacciones;
 
     public Integer getIdPlan() {
         return idPlan;
@@ -68,11 +71,19 @@ public class Plan {
         this.activo = activo;
     }
 
-    public List<Presupuesto> getPresupuestos() {
-        return presupuestos;
+    public List<PresupuestoMovimiento> getPresupuestosMovimientos() {
+        return presupuestosMovimientos;
     }
 
-    public void setPresupuestos(List<Presupuesto> presupuestos) {
-        this.presupuestos = presupuestos;
+    public void setPresupuestosMovimientos(List<PresupuestoMovimiento> presupuestosMovimientos) {
+        this.presupuestosMovimientos = presupuestosMovimientos;
+    }
+
+    public List<PresupuestoTransaccion> getPresupuestosTransacciones() {
+        return presupuestosTransacciones;
+    }
+
+    public void setPresupuestosTransacciones(List<PresupuestoTransaccion> presupuestosTransacciones) {
+        this.presupuestosTransacciones = presupuestosTransacciones;
     }
 }
