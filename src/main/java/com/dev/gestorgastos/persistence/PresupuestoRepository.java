@@ -1,7 +1,7 @@
 package com.dev.gestorgastos.persistence;
 
 import com.dev.gestorgastos.domain.dto.PresupuestoMovimientoDto;
-import com.dev.gestorgastos.domain.repository.PresupuestoDtoRepository;
+import com.dev.gestorgastos.domain.repository.PresupuestoMovimientoDtoRepository;
 import com.dev.gestorgastos.persistence.crud.PresupuestoCrudRepository;
 import com.dev.gestorgastos.persistence.mapper.PresupuestoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class PresupuestoRepository implements PresupuestoDtoRepository {
+public class PresupuestoRepository implements PresupuestoMovimientoDtoRepository {
     @Autowired
     PresupuestoCrudRepository presupuestoCrudRepository;
 

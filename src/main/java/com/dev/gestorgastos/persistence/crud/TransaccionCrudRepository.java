@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +16,13 @@ public interface TransaccionCrudRepository extends CrudRepository<Transaccion,In
     Optional<Transaccion> findByIdTransaccion(Integer idTransaccion);
     Optional<List<Transaccion>> findAllByActivoTrueOrderByIdTipoTransaccionAsc();
     Optional<List<Transaccion>> findAllByActivoFalseOrderByIdTipoTransaccionsc();
-    Optional<List<Transaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoTrueOrderByIdTipoTransaccionAsc(String nombreTipoMovimiento);
-    Optional<List<Transaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoFalseOrderByIdTipoTransaccionAsc(String nombreTipoMovimiento);
+    Optional<List<Transaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoTrueOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
+    Optional<List<Transaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoFalseOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
     Optional<List<Transaccion>> findByIdTipoTransaccionAndActivoTrue(Integer idTipoTransaccion);
     Optional<List<Transaccion>> findByIdCuentaEgresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaEgreso);
     Optional<List<Transaccion>> findByIdCuentaIngresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaIngreso);
-    Optional<List<Transaccion>> findByIdPresupuestoAndActivoTrueOrderByIdTipoMovimientoAsc(Integer idPresupuesto);
+    Optional<List<Transaccion>> findByIdPresupuestoTransaccionAndActivoTrueOrderByIdTipoMovimientoAsc(Integer idPresupuestoTransaccion);
+    Optional<List<Movimiento>> findByFechaHoraBetweenAndActivoTrueOrderByFechaHoraAsc(LocalDateTime startDateTime, LocalDateTime endDateTime);
     @Transactional
     @Modifying
     @Query("UPDATE Transaccion p SET p.activo = :activo WHERE p.idTransaccion = :idTransaccion")
