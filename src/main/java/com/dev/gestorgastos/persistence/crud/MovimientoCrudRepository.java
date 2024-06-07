@@ -12,13 +12,13 @@ import java.util.Optional;
 public interface MovimientoCrudRepository extends CrudRepository<Movimiento,Integer> {
 
     Optional<Movimiento> findByIdMovimiento(Integer idMovimiento);
-    Optional<List<Movimiento>> findAllByActivoTrueOrderByTipoMovimientoNombreTipoMovimientoAsc();
-    Optional<List<Movimiento>> findAllByActivoFalseOrderByTipoMovimientoNombreTipoMovimientoAsc();
-    Optional<List<Movimiento>> findByTipoMovimientoNombreTipoMovimientoContainingAndActivoTrueOrderByTipoMovimientoNombreTipoMovimientoAsc(String nombreTipoMovimiento);
-    Optional<List<Movimiento>> findByTipoMovimientoNombreTipoMovimientoContainingAndActivoFalseOrderByTipoMovimientoNombreTipoMovimientoAsc(String nombreTipoMovimiento);
-    Optional<List<Movimiento>> findByIdTipoMovimientoAndActivoTrueOrderByTipoMovimientoNombreTipoMovimientoAsc(Integer idTipoMovimiento);
-    Optional<List<Movimiento>> findByIdCuentaAndActivoTrueOrderByCuentaDescripcionAsc(Integer idCuenta);
-    Optional<List<Movimiento>> findByIdPresupuestoAndActivoTrueOrderByIdPresupuestoAsc(Integer idPresupuesto);
+    Optional<List<Movimiento>> findAllByActivoTrueOrderByIdTipoMovimientoAsc();
+    Optional<List<Movimiento>> findAllByActivoFalseOrderByIdTipoMovimientoAsc();
+    Optional<List<Movimiento>> findByTipoMovimientoNombreTipoMovimientoContainingAndActivoTrueOrderByIdTipoMovimientoAsc(String nombreTipoMovimiento);
+    Optional<List<Movimiento>> findByTipoMovimientoNombreTipoMovimientoContainingAndActivoFalseOrderByIdTipoMovimientoAsc(String nombreTipoMovimiento);
+    Optional<List<Movimiento>> findByIdTipoMovimientoAndActivoTrue(Integer idTipoMovimiento);
+    Optional<List<Movimiento>> findByIdCuentaAndActivoTrueOrderByIdTipoMovimientoAsc(Integer idCuenta);
+    Optional<List<Movimiento>> findByIdPresupuestoAndActivoTrueOrderByIdTipoMovimientoAsc(Integer idPresupuesto);
     @Transactional
     @Modifying
     @Query("UPDATE Movimiento p SET p.activo = :activo WHERE p.idMovimiento = :idMovimiento")
