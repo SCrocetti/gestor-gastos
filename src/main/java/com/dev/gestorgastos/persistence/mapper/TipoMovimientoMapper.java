@@ -2,11 +2,12 @@ package com.dev.gestorgastos.persistence.mapper;
 import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.persistence.entity.TipoMovimiento;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TipoMovimientoMapper {
     TipoMovimientoMapper INSTANCE = Mappers.getMapper(TipoMovimientoMapper.class);
 
