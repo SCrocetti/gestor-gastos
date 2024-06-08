@@ -121,13 +121,6 @@ public class PersonaController {
             @ApiResponse(responseCode = "404", description = "Persona not found")
     })
     public ResponseEntity<String> unDelete(@Parameter(description = "Id of the persona") @PathVariable("id") String personaId) {
-        try {
-            boolean undeleted = personaService.unDelete(Integer.parseInt(personaId));
-            return new ResponseEntity<>(undeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-        } catch (EntityCannotBeDeletedException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(personaService.unDelete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

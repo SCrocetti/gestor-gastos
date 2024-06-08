@@ -2,6 +2,7 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.DenominacionDto;
 import com.dev.gestorgastos.domain.service.DenominacionService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -108,15 +109,25 @@ public class DenominacionController {
     public ResponseEntity<DenominacionDto> save(@RequestBody DenominacionDto denominacionDto) {
         return new ResponseEntity<>(denominacionService.save(denominacionDto), HttpStatus.CREATED);
     }
+
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Deletes a denominacion by id", description = "Deletes a denominacion by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Denominacion not found")
+            @ApiResponse(responseCode = "404", description = "Denominacion not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Denominacion with active Cuentas")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the denominacion") @PathVariable("id") String denominacionId) {
-        return  new ResponseEntity(denominacionService.delete(Integer.parseInt(denominacionId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            boolean deleted = denominacionService.delete(Integer.parseInt(denominacionId));
+            return new ResponseEntity<>(deleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a denominacion by id", description = "Undeletes a denominacion by id")
     @ApiResponses({
