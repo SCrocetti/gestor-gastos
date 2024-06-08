@@ -12,7 +12,6 @@ public class Cuenta {
     @Column(name = "id_cuenta")
     private Integer idCuenta;
 
-
     @Column(name = "descripcion")
     private String descripcion;
 
@@ -66,5 +65,139 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuentaIngreso")
     private List<Transaccion> transaccionesIngresos;
 
+    public Integer getIdCuenta() {
+        return idCuenta;
+    }
 
+    public void setIdCuenta(Integer idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    public Long getFondos() {
+        return fondos;
+    }
+
+    public void setFondos(Long fondos) {
+        this.fondos = fondos;
+    }
+
+    public Integer getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Integer idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Integer getIdDenominacion() {
+        return idDenominacion;
+    }
+
+    public void setIdDenominacion(Integer idDenominacion) {
+        this.idDenominacion = idDenominacion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Denominacion getDenominacion() {
+        return denominacion;
+    }
+
+    public void setDenominacion(Denominacion denominacion) {
+        this.denominacion = denominacion;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public List<PresupuestoMovimiento> getPresupuestosMovimientos() {
+        return presupuestosMovimientos;
+    }
+
+    public void setPresupuestosMovimientos(List<PresupuestoMovimiento> presupuestosMovimientos) {
+        this.presupuestosMovimientos = presupuestosMovimientos;
+    }
+
+    public List<PresupuestoTransaccion> getPresupuestosTransaccionesEgresos() {
+        return presupuestosTransaccionesEgresos;
+    }
+
+    public void setPresupuestosTransaccionesEgresos(List<PresupuestoTransaccion> presupuestosTransaccionesEgresos) {
+        this.presupuestosTransaccionesEgresos = presupuestosTransaccionesEgresos;
+    }
+
+    public List<PresupuestoTransaccion> getPresupuestosTransaccionesIngresos() {
+        return presupuestosTransaccionesIngresos;
+    }
+
+    public void setPresupuestosTransaccionesIngresos(List<PresupuestoTransaccion> presupuestosTransaccionesIngresos) {
+        this.presupuestosTransaccionesIngresos = presupuestosTransaccionesIngresos;
+    }
+
+    public List<Movimiento> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(List<Movimiento> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    public List<Transaccion> getTransaccionesEgresos() {
+        return transaccionesEgresos;
+    }
+
+    public void setTransaccionesEgresos(List<Transaccion> transaccionesEgresos) {
+        this.transaccionesEgresos = transaccionesEgresos;
+    }
+
+    public List<Transaccion> getTransaccionesIngresos() {
+        return transaccionesIngresos;
+    }
+
+    public void setTransaccionesIngresos(List<Transaccion> transaccionesIngresos) {
+        this.transaccionesIngresos = transaccionesIngresos;
+    }
 }

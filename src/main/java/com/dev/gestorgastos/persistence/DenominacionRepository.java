@@ -3,9 +3,12 @@ package com.dev.gestorgastos.persistence;
 import com.dev.gestorgastos.domain.dto.DenominacionDto;
 import com.dev.gestorgastos.domain.repository.DenominacionDtoRepository;
 import com.dev.gestorgastos.persistence.crud.DenominacionCrudRepository;
+import com.dev.gestorgastos.persistence.entity.Cuenta;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import com.dev.gestorgastos.persistence.mapper.DenominacionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,15 +47,21 @@ public class DenominacionRepository implements DenominacionDtoRepository {
     public DenominacionDto save(DenominacionDto denominacionDto) {
         return DenominacionMapper.INSTANCE.toDto(denominacionCrudRepository.save(DenominacionMapper.INSTANCE.toEntity(denominacionDto)));
     }
-
     @Override
+    @Transactional
     public boolean delete(Integer idDenominacion) {
-        return  getByIdDenominacion(idDenominacion).map(denominacion -> {
-            denominacionCrudRepository.setActivoByIdDenominacion(idDenominacion,false);
+        return denominacionCrudRepository.findByIdDenominacion(idDenominacion).map(denominacion -> {
+            if (denominacion.getCuentas() != null && !denominacion.getCuentas().isEmpty()) {
+                for(Cuenta cuenta : denominacion.getCuentas()){
+                    if(cuenta.isActivo()){
+                        throw new EntityCannotBeDeletedException("Cannot delete Denominacion with id " + idDenominacion + " as it has associated active Cuentas.");
+                    }
+                }
+            }
+            denominacionCrudRepository.setActivoByIdDenominacion(idDenominacion, false);
             return true;
         }).orElse(false);
     }
-
     @Override
     public boolean unDelete(Integer idDenominacion) {
         return  getByIdDenominacion(idDenominacion).map(denominacion -> {

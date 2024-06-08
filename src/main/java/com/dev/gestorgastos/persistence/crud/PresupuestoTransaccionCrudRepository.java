@@ -14,7 +14,7 @@ public interface PresupuestoTransaccionCrudRepository extends CrudRepository<Pre
 
     Optional<PresupuestoTransaccion> findByIdPresupuestoTransaccion(Integer idPresupuestoTransaccion);
     Optional<List<PresupuestoTransaccion>> findAllByActivoTrueOrderByIdTipoTransaccionAsc();
-    Optional<List<PresupuestoTransaccion>> findAllByActivoFalseOrderByIdTransaccionAsc();
+    Optional<List<PresupuestoTransaccion>> findAllByActivoFalseOrderByIdTipoTransaccionAsc();
     Optional<List<PresupuestoTransaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoTrueOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
     Optional<List<PresupuestoTransaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoFalseOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
     Optional<List<PresupuestoTransaccion>> findByIdTipoTransaccionAndActivoTrue(Integer idTipoTransaccion);
@@ -23,5 +23,5 @@ public interface PresupuestoTransaccionCrudRepository extends CrudRepository<Pre
     @Transactional
     @Modifying
     @Query("UPDATE PresupuestoTransaccion p SET p.activo = :activo WHERE p.idPresupuestoTransaccion= :idPresupuestoTransaccion")
-    void setActivoByIdPresupuesto(Integer idPresupuestoMovimiento, boolean activo);
+    void setActivoByIdPresupuestoTransaccion(Integer idPresupuestoTransaccion, boolean activo);
 }

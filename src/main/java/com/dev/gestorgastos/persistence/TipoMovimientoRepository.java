@@ -3,9 +3,13 @@ package com.dev.gestorgastos.persistence;
 import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.repository.TipoMovimientoDtoRepository;
 import com.dev.gestorgastos.persistence.crud.TipoMovimientoCrudRepository;
+import com.dev.gestorgastos.persistence.entity.Movimiento;
+import com.dev.gestorgastos.persistence.entity.PresupuestoMovimiento;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import com.dev.gestorgastos.persistence.mapper.TipoMovimientoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +50,27 @@ public class TipoMovimientoRepository implements TipoMovimientoDtoRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(Integer idTipoMovimiento) {
-        return  getByIdTipoMovimiento(idTipoMovimiento).map(tipoMovimiento -> {
-            tipoMovimientoCrudRepository.setActivoByIdTipoMovimiento(idTipoMovimiento,false);
+        return tipoMovimientoCrudRepository.findByIdTipoMovimiento(idTipoMovimiento).map(tipoMovimiento -> {
+            if (tipoMovimiento.getPresupuestosMovimientos() != null && !tipoMovimiento.getPresupuestosMovimientos().isEmpty()) {
+                for(PresupuestoMovimiento presupuestoMovimiento: tipoMovimiento.getPresupuestosMovimientos()){
+                    if(presupuestoMovimiento.isActivo()){
+                        throw new EntityCannotBeDeletedException("Cannot delete TipoMovimiento with id " + idTipoMovimiento + " as it has associated active PresupuestosMovimientos.");
+                    }
+                }
+            }
+            if (tipoMovimiento.getMovimientos() != null && !tipoMovimiento.getMovimientos().isEmpty()) {
+                for(Movimiento movimiento: tipoMovimiento.getMovimientos()){
+                    if(movimiento.isActivo()){
+                        throw new EntityCannotBeDeletedException("Cannot delete TipoMovimiento with id " + idTipoMovimiento + " as it has associated active Movimientos.");
+                    }
+                }
+            }
+            tipoMovimientoCrudRepository.setActivoByIdTipoMovimiento(idTipoMovimiento, false);
             return true;
         }).orElse(false);
     }
-
     @Override
     public boolean unDelete(Integer idTipoMovimiento) {
         return  getByIdTipoMovimiento(idTipoMovimiento).map(tipoMovimiento -> {

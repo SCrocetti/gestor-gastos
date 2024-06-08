@@ -15,7 +15,7 @@ public interface TipoTransaccionCrudRepository extends CrudRepository<TipoTransa
 
     Optional<TipoTransaccion> findByIdTipoTransaccion(Integer idTipoTransaccion);
     Optional<List<TipoTransaccion>> findByNombreTipoTransaccionContainingAndActivoTrueOrderByNombreTipoTransaccionAsc(String nombreTipoTransaccion);
-    Optional<List<TipoTransaccion>> findByNombreTipoTransaccionContainingAndActivoFalseOrderByTNombreipoTransaccionAsc(String nombreTipoTransacciono);
+    Optional<List<TipoTransaccion>> findByNombreTipoTransaccionContainingAndActivoFalseOrderByNombreTipoTransaccionAsc(String nombreTipoTransacciono);
     Optional<List<TipoTransaccion>> findAllByActivoTrueOrderByNombreTipoTransaccionAsc();
     Optional<List<TipoTransaccion>> findAllByActivoFalseOrderByNombreTipoTransaccionAsc();
     @Transactional

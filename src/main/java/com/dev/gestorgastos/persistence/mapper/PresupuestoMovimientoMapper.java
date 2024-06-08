@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PresupuestoMovimientoMapper {
-    PresupuestoMovimiento INSTANCE = Mappers.getMapper(PresupuestoMovimiento.class);
+    PresupuestoMovimientoMapper INSTANCE = Mappers.getMapper(PresupuestoMovimientoMapper.class);
 
     PresupuestoMovimientoDto toDto(PresupuestoMovimiento presupuestoMovimiento);
 

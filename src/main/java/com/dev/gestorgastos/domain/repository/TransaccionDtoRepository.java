@@ -22,7 +22,7 @@ public interface TransaccionDtoRepository {
     public Optional<List<TransaccionDto>> getActivosByFechaHoraBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
     public Optional<List<TransaccionDto>> getAll() ;
     public Optional<List<TransaccionDto>> getAllDeleted();
-    public TransaccionDto save(TransaccionDto movimientoDto);
-    public boolean delete(Integer idMovimiento);
-    public boolean unDelete(Integer idMovimiento);
+    public TransaccionDto save(TransaccionDto transaccionDto);
+    public boolean delete(Integer idTransaccion);
+    public boolean unDelete(Integer idTransaccion);
 }
