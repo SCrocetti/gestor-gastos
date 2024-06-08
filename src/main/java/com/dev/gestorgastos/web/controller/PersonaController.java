@@ -2,6 +2,7 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.PersonaDto;
 import com.dev.gestorgastos.domain.service.PersonaService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -99,10 +100,18 @@ public class PersonaController {
     @Operation(summary = "Deletes a persona by id", description = "Deletes a persona by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Persona not found")
+            @ApiResponse(responseCode = "404", description = "Persona not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Persona with active Cuentas")
     })
-    public ResponseEntity delete(@Parameter(description ="Id of the persona") @PathVariable("id") String personaId) {
-        return  new ResponseEntity(personaService.delete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> delete(@Parameter(description = "Id of the persona") @PathVariable("id") String personaId) {
+        try {
+            boolean deleted = personaService.delete(Integer.parseInt(personaId));
+            return new ResponseEntity<>(deleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/undelete/{id}")
@@ -111,7 +120,14 @@ public class PersonaController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Persona not found")
     })
-    public ResponseEntity unDelete(@Parameter(description ="Id of the persona") @PathVariable("id") String personaId) {
-        return  new ResponseEntity(personaService.unDelete(Integer.parseInt(personaId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> unDelete(@Parameter(description = "Id of the persona") @PathVariable("id") String personaId) {
+        try {
+            boolean undeleted = personaService.unDelete(Integer.parseInt(personaId));
+            return new ResponseEntity<>(undeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
