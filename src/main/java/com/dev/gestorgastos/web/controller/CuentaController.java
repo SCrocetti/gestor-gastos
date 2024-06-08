@@ -1,7 +1,9 @@
 package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.CuentaDto;
+import com.dev.gestorgastos.domain.dto.MovimientoDto;
 import com.dev.gestorgastos.domain.service.CuentaService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -155,18 +157,33 @@ public class CuentaController {
 
     @PostMapping("/save")
     @Operation(summary = "Saves a cuenta", description = "Saves the data of a cuenta")
-    @ApiResponse(responseCode = "201", description = "Created")
-    public ResponseEntity<CuentaDto> save(@RequestBody CuentaDto cuentaDto) {
-        return new ResponseEntity<>(cuentaService.save(cuentaDto), HttpStatus.CREATED);
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<?> save(@RequestBody CuentaDto cuentaDto) {
+        try {
+            return ResponseEntity.status(201).body(cuentaService.save(cuentaDto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Deletes a cuenta by id", description = "Deletes a cuenta by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Cuenta not found")
+            @ApiResponse(responseCode = "404", description = "Cuenta not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Cuenta with active asociated Entities")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the cuenta") @PathVariable("id") String idCuenta) {
-        return  new ResponseEntity(cuentaService.delete(Integer.parseInt(idCuenta)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            boolean deleted = cuentaService.delete(Integer.parseInt(idCuenta));
+            return new ResponseEntity<>(deleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a cuenta by id", description = "Undeletes a cuenta by id")
