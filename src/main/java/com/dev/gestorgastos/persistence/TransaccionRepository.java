@@ -4,6 +4,8 @@ import com.dev.gestorgastos.domain.dto.TransaccionDto;
 import com.dev.gestorgastos.domain.repository.TransaccionDtoRepository;
 import com.dev.gestorgastos.persistence.crud.*;
 import com.dev.gestorgastos.persistence.entity.*;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.MovimientoMapper;
 import com.dev.gestorgastos.persistence.mapper.TransaccionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,13 +142,13 @@ public class TransaccionRepository implements TransaccionDtoRepository {
             Cuenta cuentaIngreso=transaccion.getCuentaIngreso();
             PresupuestoTransaccion presupuestoTransaccion=transaccion.getPresupuestoTransaccion();
             if(presupuestoTransaccion.getMontoDebitado()-transaccion.getMontoEgreso()<0){
-               throw new IllegalArgumentException("MontoDebitado on the PresupuestoTransaccion cannot be less than 0");
+               throw new EntityCannotBeDeletedException("MontoDebitado on the PresupuestoTransaccion cannot be less than 0");
             }
             if(presupuestoTransaccion.getMontoAcreditado()-transaccion.getMontoIngreso()<0){
-                throw new IllegalArgumentException("MontoAcreditado on the PresupuestoTransaccion cannot be less than 0");
+                throw new EntityCannotBeDeletedException("MontoAcreditado on the PresupuestoTransaccion cannot be less than 0");
             }
             if(cuentaIngreso.getFondos()-transaccion.getMontoIngreso()<0){
-                throw new IllegalArgumentException("Insuficent funds in the cuentaIngreso");
+                throw new EntityCannotBeDeletedException("Insuficent funds in the cuentaIngreso");
             }
             presupuestoTransaccion.setMontoDebitado(presupuestoTransaccion.getMontoDebitado()-transaccion.getMontoEgreso());
             presupuestoTransaccion.setMontoAcreditado(presupuestoTransaccion.getMontoAcreditado()-transaccion.getMontoIngreso());
@@ -172,7 +174,7 @@ public class TransaccionRepository implements TransaccionDtoRepository {
             Cuenta cuentaIngreso=transaccion.getCuentaIngreso();
             PresupuestoTransaccion presupuestoTransaccion=transaccion.getPresupuestoTransaccion();
             if (cuentaEgreso.getFondos() - transaccion.getMontoEgreso() < 0) {
-                throw new IllegalArgumentException("Insuficent funds in the cuentaEgreso");
+                throw new EntityCannotBeUndeletedException("Insuficent funds in the cuentaEgreso");
             }
             cuentaEgreso.setFondos(cuentaEgreso.getFondos() - transaccion.getMontoEgreso());
             cuentaIngreso.setFondos(cuentaIngreso.getFondos()+transaccion.getMontoIngreso());

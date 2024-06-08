@@ -5,6 +5,7 @@ import com.dev.gestorgastos.persistence.MovimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,6 @@ import java.util.Optional;
 public class MovimientoService {
     @Autowired
     MovimientoRepository movimientoRepository;
-
     public Optional<MovimientoDto> getByIdMovimiento(Integer idMovimiento) {
         return movimientoRepository.getByIdMovimiento(idMovimiento);
     }
@@ -33,10 +33,13 @@ public class MovimientoService {
         return movimientoRepository.getActivosByIdCuenta(idCuenta);
     }
 
-    public Optional<List<MovimientoDto>> getActivosByIdPresupuesto(Integer idPresupuesto) {
-        return movimientoRepository.getActivosByIdPresupuesto(idPresupuesto);
+    public Optional<List<MovimientoDto>> getActivosByIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        return movimientoRepository.getActivosByIdPresupuestoMovimiento(idPresupuestoMovimiento);
     }
 
+    public Optional<List<MovimientoDto>> getActivosByFechaHoraBetween(LocalDateTime startDateTime, LocalDateTime endDateTime){
+        return movimientoRepository.getActivosByFechaHoraBetween(startDateTime,endDateTime);
+    }
     public Optional<List<MovimientoDto>> getAll() {
         return movimientoRepository.getAll();
     }

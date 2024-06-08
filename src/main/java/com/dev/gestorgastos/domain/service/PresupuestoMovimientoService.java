@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PresupuestoService {
+public class PresupuestoMovimientoService {
     @Autowired
     PresupuestoMovimientoRepository presupuestoMovimientoRepository;
-
-    public Optional<PresupuestoMovimientoDto> getByIdPresupuesto(Integer idPresupuesto) {
-        return presupuestoMovimientoRepository.getByIdPresupuesto(idPresupuesto);
+    public Optional<PresupuestoMovimientoDto> getByIdPresupuestoMovimiento(Integer idPresupuestoMovimiento) {
+        return presupuestoMovimientoRepository.getByIdPresupuestoMovimiento(idPresupuestoMovimiento);
     }
 
     public Optional<List<PresupuestoMovimientoDto>> getActivosByNombreTipoMovimiento(String nombreTipoMovimiento) {

@@ -10,6 +10,8 @@ import com.dev.gestorgastos.persistence.entity.Cuenta;
 import com.dev.gestorgastos.persistence.entity.Movimiento;
 import com.dev.gestorgastos.persistence.entity.PresupuestoMovimiento;
 import com.dev.gestorgastos.persistence.entity.TipoMovimiento;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.MovimientoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -130,10 +132,10 @@ public class MovimientoRepository implements MovimientoDtoRepository {
             PresupuestoMovimiento presupuestoMovimiento=movimiento.getPresupuestoMovimiento();
             if (movimiento.getMonto() > 0) {
                 if (cuenta.getFondos() - movimiento.getMonto() < 0) {
-                    throw new IllegalArgumentException("Insufficient funds in the account");
+                    throw new EntityCannotBeDeletedException("Insufficient funds in the account");
                 }
                 if(presupuestoMovimiento.getMontoEjecutado() - movimiento.getMonto()<0){
-                    throw new IllegalArgumentException("MontoEjecutado on the PresupuestoMovimiento cannot be less than 0");
+                    throw new EntityCannotBeDeletedException("MontoEjecutado on the PresupuestoMovimiento cannot be less than 0");
                 }
                 cuenta.setFondos(cuenta.getFondos() - movimiento.getMonto());
                 presupuestoMovimiento.setMontoEjecutado(presupuestoMovimiento.getMontoEjecutado() - movimiento.getMonto());
@@ -161,7 +163,7 @@ public class MovimientoRepository implements MovimientoDtoRepository {
             PresupuestoMovimiento presupuestoMovimiento=movimiento.getPresupuestoMovimiento();
             if (movimiento.getMonto() < 0) {
                 if (cuenta.getFondos() + movimiento.getMonto() < 0) {
-                    throw new IllegalArgumentException("Insufficient funds in the account");
+                    throw new EntityCannotBeUndeletedException("Insufficient funds in the account");
                 } else {
                     cuenta.setFondos(cuenta.getFondos() + movimiento.getMonto());
                     presupuestoMovimiento.setMontoEjecutado(presupuestoMovimiento.getMontoEjecutado() - movimiento.getMonto());

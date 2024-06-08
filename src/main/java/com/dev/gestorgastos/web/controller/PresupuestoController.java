@@ -1,7 +1,7 @@
 package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.PresupuestoMovimientoDto;
-import com.dev.gestorgastos.domain.service.PresupuestoService;
+import com.dev.gestorgastos.domain.service.PresupuestoMovimientoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +19,7 @@ import java.util.List;
 public class PresupuestoController {
 
     @Autowired
-    private PresupuestoService presupuestoService;
+    private PresupuestoMovimientoService presupuestoMovimientoService;
 
     @GetMapping("/id/{id}")
     @Operation(summary = "Get by Id", description = "Get a Presupuesto by its idPresupuesto")
@@ -28,7 +28,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "Presupuesto not found")
     })
     public ResponseEntity<PresupuestoMovimientoDto> getByIdPresupuesto(@Parameter(description = "Id of the presupuesto") @PathVariable("id")  String idPresupuesto) {
-        return presupuestoService.getByIdPresupuesto(Integer.parseInt(idPresupuesto))
+        return presupuestoMovimientoService.getByIdPresupuesto(Integer.parseInt(idPresupuesto))
                 .map(presupuesto-> new ResponseEntity<PresupuestoMovimientoDto>(presupuesto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -40,7 +40,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
-        return presupuestoService.getActivosByNombreTipoMovimiento(nombreTipoMovimiento)
+        return presupuestoMovimientoService.getActivosByNombreTipoMovimiento(nombreTipoMovimiento)
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getInactivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento of the presupuesto") @PathVariable("nombre") String nombreTipoMovimiento) {
-        return presupuestoService.getInactivosByNombreTipoMovimiento(nombreTipoMovimiento)
+        return presupuestoMovimientoService.getInactivosByNombreTipoMovimiento(nombreTipoMovimiento)
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -75,7 +75,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdTipoMovimiento(@Parameter(description ="Id of the tipoMovimiento of the presupuesto") @PathVariable("idTipoMovimiento") String idTipoMovimiento) {
-        return presupuestoService.getActivosByIdTipoMovimiento(Integer.parseInt(idTipoMovimiento))
+        return presupuestoMovimientoService.getActivosByIdTipoMovimiento(Integer.parseInt(idTipoMovimiento))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -92,7 +92,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdCuenta(@Parameter(description ="Id of the cuenta of the presupuesto") @PathVariable("idCuenta") String idCuenta) {
-        return presupuestoService.getActivosByIdCuenta(Integer.parseInt(idCuenta))
+        return presupuestoMovimientoService.getActivosByIdCuenta(Integer.parseInt(idCuenta))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -110,7 +110,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getActivosByIdPlan(@Parameter(description ="Id of the plan of the presupuesto") @PathVariable("idPlan") String idPlan) {
-        return presupuestoService.getActivosByIdPlan(Integer.parseInt(idPlan))
+        return presupuestoMovimientoService.getActivosByIdPlan(Integer.parseInt(idPlan))
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -127,7 +127,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getAllActive() {
-        return presupuestoService.getAll()
+        return presupuestoMovimientoService.getAll()
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -144,7 +144,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "No Presupuesto found")
     })
     public ResponseEntity<List<PresupuestoMovimientoDto>> getAllUnactive() {
-        return presupuestoService.getAllDeleted()
+        return presupuestoMovimientoService.getAllDeleted()
                 .map(presupuestos -> {
                     if (presupuestos.isEmpty()) {
                         return new ResponseEntity<List<PresupuestoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -159,7 +159,7 @@ public class PresupuestoController {
     @Operation(summary = "Saves a presupuesto", description = "Saves the data of a presupuesto")
     @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<PresupuestoMovimientoDto> save(@RequestBody PresupuestoMovimientoDto presupuestoMovimientoDto) {
-        return new ResponseEntity<>(presupuestoService.save(presupuestoMovimientoDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(presupuestoMovimientoService.save(presupuestoMovimientoDto), HttpStatus.CREATED);
     }
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Deletes a presupuesto by id", description = "Deletes a presupuesto by id")
@@ -168,7 +168,7 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "Presupuesto not found")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the presupuesto") @PathVariable("id") String idPresupuesto) {
-        return  new ResponseEntity(presupuestoService.delete(Integer.parseInt(idPresupuesto)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(presupuestoMovimientoService.delete(Integer.parseInt(idPresupuesto)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a presupuesto by id", description = "Undeletes a presupuesto by id")
@@ -177,6 +177,6 @@ public class PresupuestoController {
             @ApiResponse(responseCode = "404", description = "Presupuesto not found")
     })
     public ResponseEntity unDelete(@Parameter(description ="Id of the presupuesto") @PathVariable("id") String idPresupuesto) {
-        return  new ResponseEntity(presupuestoService.unDelete(Integer.parseInt(idPresupuesto)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return  new ResponseEntity(presupuestoMovimientoService.unDelete(Integer.parseInt(idPresupuesto)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

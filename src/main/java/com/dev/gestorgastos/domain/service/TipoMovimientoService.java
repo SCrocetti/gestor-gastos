@@ -16,10 +16,10 @@ public class TipoMovimientoService {
     public Optional<TipoMovimientoDto> getByIdTipoMovimiento(Integer idTipoMovimiento){
         return tipoMovimientoRepository.getByIdTipoMovimiento(idTipoMovimiento);
     }
-    public Optional<List<TipoMovimientoDto>> getActiveByNombreTipoMocimientoontains(String nombreTipoMovimiento){
+    public Optional<List<TipoMovimientoDto>> getActiveByNombreTipoMovimientoContains(String nombreTipoMovimiento){
         return tipoMovimientoRepository.getActivosByNombreTipoMovimientoContains(nombreTipoMovimiento);
     }
-    public Optional<List<TipoMovimientoDto>> getUnactiveByNombreTipoMocimientoontains(String nombreTipoMovimiento){
+    public Optional<List<TipoMovimientoDto>> getUnactiveByNombreTipoMovimientoContains(String nombreTipoMovimiento){
         return tipoMovimientoRepository.getInactivosByNombreTipoMovimientoContains(nombreTipoMovimiento);
     }
     public Optional<List<TipoMovimientoDto>>  getAll() {
