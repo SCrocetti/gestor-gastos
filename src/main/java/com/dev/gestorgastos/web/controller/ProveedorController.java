@@ -3,6 +3,7 @@ package com.dev.gestorgastos.web.controller;
 import com.dev.gestorgastos.domain.dto.ProveedorDto;
 import com.dev.gestorgastos.domain.service.ProveedorService;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -114,7 +115,7 @@ public class ProveedorController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Proveedor not found"),
-            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Proveedor with active Cuentas")
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Proveedor due to a conflict")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the proveedor") @PathVariable("id") String proveedorId) {
         try {
@@ -130,9 +131,16 @@ public class ProveedorController {
     @Operation(summary = "Undeletes a proveedor by id", description = "Undeletes a proveedor by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Proveedor not found")
+            @ApiResponse(responseCode = "404", description = "Proveedor not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot undelete Proveedor due to a conflict")
     })
     public ResponseEntity unDelete(@Parameter(description ="Id of the proveedor") @PathVariable("id") String proveedorId) {
-        return  new ResponseEntity(proveedorService.unDelete(Integer.parseInt(proveedorId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return  new ResponseEntity(proveedorService.unDelete(Integer.parseInt(proveedorId)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeUndeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
