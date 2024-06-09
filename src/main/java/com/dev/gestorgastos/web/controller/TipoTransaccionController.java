@@ -1,10 +1,7 @@
 package com.dev.gestorgastos.web.controller;
 
-import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.dto.TipoTransaccionDto;
-import com.dev.gestorgastos.domain.service.TipoMovimientoService;
 import com.dev.gestorgastos.domain.service.TipoTransaccionService;
-import com.dev.gestorgastos.persistence.TipoTransaccionRepository;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import io.swagger.v3.oas.annotations.Operation;
