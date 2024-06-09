@@ -92,20 +92,25 @@ public class PlanController {
     @Operation(summary = "Get all active plans with fechaFin between two dates", description = "Get the list of all active plans with fechaFin between two dates")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
             @ApiResponse(responseCode = "404", description = "No Plan found")
     })
-    public ResponseEntity<List<PlanDto>> getActiveFechaFinBetween(
+    public ResponseEntity<?> getActiveFechaFinBetween(
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        return planService.getActiveByFechaFinBetween(startDate,endDate)
-                .map(planes -> {
-                    if (planes.isEmpty()) {
-                        return new ResponseEntity<List<PlanDto>>(HttpStatus.NOT_FOUND);
-                    } else {
-                        return new ResponseEntity<>(planes, HttpStatus.OK);
-                    }
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        try {
+            return planService.getActiveByFechaFinBetween(startDate,endDate)
+                    .map(planes -> {
+                        if (planes.isEmpty()) {
+                            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        } else {
+                            return new ResponseEntity<>(planes, HttpStatus.OK);
+                        }
+                    })
+                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active planes data", description = "Get the list of all active Planes")
@@ -144,9 +149,16 @@ public class PlanController {
 
     @PostMapping("/save")
     @Operation(summary = "Saves a plan", description = "Saves the data of a plan")
-    @ApiResponse(responseCode = "201", description = "Created")
-    public ResponseEntity<PlanDto> save(@RequestBody PlanDto planDto) {
-        return new ResponseEntity<>(planService.save(planDto), HttpStatus.CREATED);
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<?> save(@RequestBody PlanDto planDto) {
+        try {
+            return new ResponseEntity<>(planService.save(planDto), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Deletes a plan by id", description = "Deletes a plan by id")
