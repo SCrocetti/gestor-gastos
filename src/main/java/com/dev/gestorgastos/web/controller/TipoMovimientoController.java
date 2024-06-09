@@ -3,6 +3,7 @@ package com.dev.gestorgastos.web.controller;
 import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.service.TipoMovimientoService;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -114,7 +115,7 @@ public class TipoMovimientoController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "TipoMovimiento not found"),
-            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete TipoMovimiento with active asociated Information")
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete TipoMovimiento due to a conflict")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the tipoMovimiento") @PathVariable("id") String idTipoMovimiento) {
         try {
@@ -130,9 +131,16 @@ public class TipoMovimientoController {
     @Operation(summary = "Undeletes a tipoMovimiento by id", description = "Undeletes a tipoMovimiento by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "TipoMovimiento not found")
+            @ApiResponse(responseCode = "404", description = "TipoMovimiento not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot undelete TipoMovimiento due to a conflict")
     })
     public ResponseEntity unDelete(@Parameter(description ="Id of the tipoMovimiento") @PathVariable("id") String idTipoMovimiento) {
-        return  new ResponseEntity(tipoMovimientoService.unDelete(Integer.parseInt(idTipoMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(tipoMovimientoService.unDelete(Integer.parseInt(idTipoMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeUndeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
