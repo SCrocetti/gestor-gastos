@@ -5,6 +5,7 @@ import com.dev.gestorgastos.domain.repository.PresupuestoTransaccionDtoRepositor
 import com.dev.gestorgastos.persistence.crud.*;
 import com.dev.gestorgastos.persistence.entity.*;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.PresupuestoTransaccionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -96,7 +97,9 @@ public class PresupuestoTransaccionRepository implements PresupuestoTransaccionD
     @Override
     public boolean delete(Integer idPresupuestoTransaccion) {
         return presupuestoTransaccionCrudRepository.findByIdPresupuestoTransaccion(idPresupuestoTransaccion).map(presupuestoTransaccion -> {
-
+            if(!presupuestoTransaccion.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete PresupuestoTransaccion with id " + idPresupuestoTransaccion + " as it has already been deleted.");
+            }
             if (presupuestoTransaccion.getTransacciones() != null && !presupuestoTransaccion.getTransacciones().isEmpty()) {
                 for(Transaccion transaccion: presupuestoTransaccion.getTransacciones()){
                     if(transaccion.isActivo()){
@@ -112,6 +115,9 @@ public class PresupuestoTransaccionRepository implements PresupuestoTransaccionD
     @Override
     public boolean unDelete(Integer idPresupuestoTransaccion) {
         return  getByIdPresupuestoTransaccion(idPresupuestoTransaccion).map(presupuestoTransaccion -> {
+            if(presupuestoTransaccion.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete PresupuestoTransaccion with id " + idPresupuestoTransaccion + " as it's not deleted.");
+            }
             presupuestoTransaccionCrudRepository.setActivoByIdPresupuestoTransaccion(idPresupuestoTransaccion,true);
             return true;
         }).orElse(false);

@@ -5,6 +5,7 @@ import com.dev.gestorgastos.domain.repository.ProveedorDtoRepository;
 import com.dev.gestorgastos.persistence.crud.ProveedorCrudRepository;
 import com.dev.gestorgastos.persistence.entity.Cuenta;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.ProveedorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,9 @@ public class ProveedorRepository implements ProveedorDtoRepository {
     @Transactional
     public boolean delete(Integer idProveedor) {
         return proveedorCrudRepository.findByIdProveedor(idProveedor).map(proveedor -> {
+            if(!proveedor.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Proveedor with id " + idProveedor + " as it has already been deleted.");
+            }
             if (proveedor.getCuentas() != null && !proveedor.getCuentas().isEmpty()) {
                 for(Cuenta cuenta : proveedor.getCuentas()){
                     if(cuenta.isActivo()){
@@ -65,6 +69,9 @@ public class ProveedorRepository implements ProveedorDtoRepository {
     @Override
     public boolean unDelete(Integer idProveedor) {
         return  getByIdProveedor(idProveedor).map(proveedor -> {
+            if(proveedor.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Proveedor with id " + idProveedor + " as it's not deleted.");
+            }
             proveedorCrudRepository.setActivoByIdProveedor(idProveedor,true);
             return true;
         }).orElse(false);

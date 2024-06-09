@@ -6,6 +6,7 @@ import com.dev.gestorgastos.persistence.crud.TipoMovimientoCrudRepository;
 import com.dev.gestorgastos.persistence.entity.Movimiento;
 import com.dev.gestorgastos.persistence.entity.PresupuestoMovimiento;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.TipoMovimientoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,6 +54,9 @@ public class TipoMovimientoRepository implements TipoMovimientoDtoRepository {
     @Transactional
     public boolean delete(Integer idTipoMovimiento) {
         return tipoMovimientoCrudRepository.findByIdTipoMovimiento(idTipoMovimiento).map(tipoMovimiento -> {
+            if(!tipoMovimiento.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete TipoMovimiento with id " + idTipoMovimiento + " as it has already been deleted.");
+            }
             if (tipoMovimiento.getPresupuestosMovimientos() != null && !tipoMovimiento.getPresupuestosMovimientos().isEmpty()) {
                 for(PresupuestoMovimiento presupuestoMovimiento: tipoMovimiento.getPresupuestosMovimientos()){
                     if(presupuestoMovimiento.isActivo()){
@@ -74,6 +78,9 @@ public class TipoMovimientoRepository implements TipoMovimientoDtoRepository {
     @Override
     public boolean unDelete(Integer idTipoMovimiento) {
         return  getByIdTipoMovimiento(idTipoMovimiento).map(tipoMovimiento -> {
+            if(tipoMovimiento.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete TipoMovimiento with id " + idTipoMovimiento + " as it's not deleted.");
+            }
             tipoMovimientoCrudRepository.setActivoByIdTipoMovimiento(idTipoMovimiento,true);
             return true;
         }).orElse(false);

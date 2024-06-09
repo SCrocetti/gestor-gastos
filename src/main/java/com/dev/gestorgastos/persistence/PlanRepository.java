@@ -7,6 +7,7 @@ import com.dev.gestorgastos.persistence.entity.PresupuestoMovimiento;
 import com.dev.gestorgastos.persistence.entity.PresupuestoTransaccion;
 import com.dev.gestorgastos.persistence.entity.Transaccion;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.PlanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -68,7 +69,9 @@ public class PlanRepository implements PlanDtoRepository {
     @Transactional
     public boolean delete(Integer idPlan) {
         return planCrudRepository.findByIdPlan(idPlan).map(plan -> {
-
+            if(!plan.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Plan with id " + idPlan + " as it has already been deleted.");
+            }
             if (plan.getPresupuestosMovimientos()!= null && !plan.getPresupuestosMovimientos().isEmpty()) {
                 for(PresupuestoMovimiento presupuestoMovimiento: plan.getPresupuestosMovimientos()){
                     if(presupuestoMovimiento.isActivo()){
@@ -91,6 +94,9 @@ public class PlanRepository implements PlanDtoRepository {
     @Override
     public boolean unDelete(Integer idPlan) {
         return  getByIdPlan(idPlan).map(plan -> {
+            if(plan.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Plan with id " + idPlan + " as it's not deleted.");
+            }
             planCrudRepository.setActivoByIdPlan(idPlan,true);
             return true;
         }).orElse(false);

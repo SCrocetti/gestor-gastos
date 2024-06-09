@@ -6,6 +6,7 @@ import com.dev.gestorgastos.persistence.crud.TipoTransaccionCrudRepository;
 import com.dev.gestorgastos.persistence.entity.PresupuestoTransaccion;
 import com.dev.gestorgastos.persistence.entity.Transaccion;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.TipoTransaccionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,6 +55,9 @@ public class TipoTransaccionRepository implements TipoTransaccionDtoRepository {
     @Transactional
     public boolean delete(Integer idTipoTransaccion) {
         return tipoTransaccionCrudRepository.findByIdTipoTransaccion(idTipoTransaccion).map(tipoTransaccion -> {
+            if(!tipoTransaccion.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete TipoTransaccion with id " + idTipoTransaccion + " as it has already been deleted.");
+            }
             if (tipoTransaccion.getPresupuestosTransacciones()!= null && !tipoTransaccion.getPresupuestosTransacciones().isEmpty()) {
                 for(PresupuestoTransaccion presupuestoTransaccion: tipoTransaccion.getPresupuestosTransacciones()){
                     if(presupuestoTransaccion.isActivo()){
@@ -75,6 +79,9 @@ public class TipoTransaccionRepository implements TipoTransaccionDtoRepository {
     @Override
     public boolean unDelete(Integer idTipoTransaccion) {
         return  getByIdTipoTransaccion(idTipoTransaccion).map(tipoTransaccion -> {
+            if(tipoTransaccion.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete TipoTransaccion with id " + idTipoTransaccion + " as it's not deleted.");
+            }
             tipoTransaccionCrudRepository.setActivoByIdTipoTransaccion(idTipoTransaccion,true);
             return true;
         }).orElse(false);

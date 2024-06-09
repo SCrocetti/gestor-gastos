@@ -128,6 +128,9 @@ public class MovimientoRepository implements MovimientoDtoRepository {
         Optional<Movimiento> movimientoOpt= movimientoCrudRepository.findByIdMovimiento(idMovimiento);
         if(movimientoOpt.isPresent()){
             Movimiento movimiento=movimientoOpt.get();
+            if(!movimiento.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Movimiento with id " + idMovimiento + " as it has already been deleted.");
+            }
             Cuenta cuenta=movimiento.getCuenta();
             PresupuestoMovimiento presupuestoMovimiento=movimiento.getPresupuestoMovimiento();
             if (movimiento.getMonto() > 0) {
@@ -159,6 +162,9 @@ public class MovimientoRepository implements MovimientoDtoRepository {
         Optional<Movimiento> movimientoOpt= movimientoCrudRepository.findByIdMovimiento(idMovimiento);
         if(movimientoOpt.isPresent()){
             Movimiento movimiento=movimientoOpt.get();
+            if(movimiento.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Movimiento with id " + idMovimiento + " as it's not deleted.");
+            }
             Cuenta cuenta=movimiento.getCuenta();
             PresupuestoMovimiento presupuestoMovimiento=movimiento.getPresupuestoMovimiento();
             if (movimiento.getMonto() < 0) {

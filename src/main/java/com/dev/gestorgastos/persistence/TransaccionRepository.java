@@ -138,6 +138,9 @@ public class TransaccionRepository implements TransaccionDtoRepository {
         Optional<Transaccion> transaccionOpt= transaccionCrudRepository.findByIdTransaccion(idTransaccion);
         if(transaccionOpt.isPresent()){
             Transaccion transaccion=transaccionOpt.get();
+            if(!transaccion.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Transaccion with id " + idTransaccion + " as it has already been deleted.");
+            }
             Cuenta cuentaEgreso=transaccion.getCuentaEgreso();
             Cuenta cuentaIngreso=transaccion.getCuentaIngreso();
             PresupuestoTransaccion presupuestoTransaccion=transaccion.getPresupuestoTransaccion();
@@ -170,6 +173,9 @@ public class TransaccionRepository implements TransaccionDtoRepository {
         Optional<Transaccion> transaccionOpt= transaccionCrudRepository.findByIdTransaccion(idTransaccion);
         if(transaccionOpt.isPresent()){
             Transaccion transaccion=transaccionOpt.get();
+            if(transaccion.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Transaccion with id " + idTransaccion + " as it's not deleted.");
+            }
             Cuenta cuentaEgreso=transaccion.getCuentaEgreso();
             Cuenta cuentaIngreso=transaccion.getCuentaIngreso();
             PresupuestoTransaccion presupuestoTransaccion=transaccion.getPresupuestoTransaccion();

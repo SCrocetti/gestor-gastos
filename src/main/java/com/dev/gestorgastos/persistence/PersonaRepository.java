@@ -4,6 +4,7 @@ import com.dev.gestorgastos.persistence.crud.PersonaCrudRepository;
 import com.dev.gestorgastos.domain.repository.PersonaDtoRepository;
 import com.dev.gestorgastos.persistence.entity.Cuenta;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.PersonaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,9 @@ public class PersonaRepository implements PersonaDtoRepository {
     @Transactional
     public boolean delete(Integer personaId) {
         return personaCrudRepository.findByIdPersona(personaId).map(persona -> {
+            if(!persona.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Persona with id " + personaId + " as it has already been deleted.");
+            }
             if (persona.getCuentas() != null && !persona.getCuentas().isEmpty()) {
                 for(Cuenta cuenta : persona.getCuentas()){
                     if(cuenta.isActivo()){
@@ -62,6 +66,9 @@ public class PersonaRepository implements PersonaDtoRepository {
     @Override
     public  boolean unDelete(Integer personaId){
         return getByIdPersona(personaId).map(persona -> {
+            if(persona.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Persona with id " + personaId + " as it's not deleted.");
+            }
             personaCrudRepository.setActivoByIdPersona(personaId,true);
             return true;
         }).orElse(false);

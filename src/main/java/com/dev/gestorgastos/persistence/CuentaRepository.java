@@ -8,6 +8,7 @@ import com.dev.gestorgastos.persistence.crud.PersonaCrudRepository;
 import com.dev.gestorgastos.persistence.crud.ProveedorCrudRepository;
 import com.dev.gestorgastos.persistence.entity.*;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.CuentaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -95,6 +96,9 @@ public class CuentaRepository implements CuentaDtoRepository {
     @Transactional
     public boolean delete(Integer idCuenta) {
         return cuentaCrudRepository.findByIdCuenta(idCuenta).map(cuenta -> {
+            if(!cuenta.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Cuenta with id " + idCuenta + " as it has already been deleted.");
+            }
             if (cuenta.getPresupuestosMovimientos() != null && !cuenta.getPresupuestosMovimientos().isEmpty()) {
                 for(PresupuestoMovimiento presupuestoMovimiento : cuenta.getPresupuestosMovimientos()){
                     if(presupuestoMovimiento.isActivo()){
@@ -144,6 +148,9 @@ public class CuentaRepository implements CuentaDtoRepository {
     @Override
     public boolean unDelete(Integer idCuenta) {
         return  getByIdCuenta(idCuenta).map(cuenta -> {
+            if(cuenta.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Cuenta with id " + idCuenta + " as it's not deleted.");
+            }
             cuentaCrudRepository.setActivoByIdCuenta(idCuenta,true);
             return true;
         }).orElse(false);

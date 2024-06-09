@@ -5,6 +5,7 @@ import com.dev.gestorgastos.domain.repository.DenominacionDtoRepository;
 import com.dev.gestorgastos.persistence.crud.DenominacionCrudRepository;
 import com.dev.gestorgastos.persistence.entity.Cuenta;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.DenominacionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,9 @@ public class DenominacionRepository implements DenominacionDtoRepository {
     @Transactional
     public boolean delete(Integer idDenominacion) {
         return denominacionCrudRepository.findByIdDenominacion(idDenominacion).map(denominacion -> {
+            if(!denominacion.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete Denominacion with id " + idDenominacion + " as it has already been deleted.");
+            }
             if (denominacion.getCuentas() != null && !denominacion.getCuentas().isEmpty()) {
                 for(Cuenta cuenta : denominacion.getCuentas()){
                     if(cuenta.isActivo()){
@@ -65,6 +69,9 @@ public class DenominacionRepository implements DenominacionDtoRepository {
     @Override
     public boolean unDelete(Integer idDenominacion) {
         return  getByIdDenominacion(idDenominacion).map(denominacion -> {
+            if(denominacion.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete Denominacion with id " + idDenominacion + " as it's not deleted.");
+            }
             denominacionCrudRepository.setActivoByIdDenominacion(idDenominacion,true);
             return true;
         }).orElse(false);

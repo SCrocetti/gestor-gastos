@@ -8,6 +8,7 @@ import com.dev.gestorgastos.domain.repository.PresupuestoMovimientoDtoRepository
 import com.dev.gestorgastos.persistence.crud.TipoMovimientoCrudRepository;
 import com.dev.gestorgastos.persistence.entity.*;
 import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import com.dev.gestorgastos.persistence.mapper.PresupuestoMovimientoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -93,7 +94,9 @@ public class PresupuestoMovimientoRepository implements PresupuestoMovimientoDto
     @Override
     public boolean delete(Integer idPresupuestoMovimiento) {
         return presupuestoMovimientoCrudRepository.findByIdPresupuestoMovimiento(idPresupuestoMovimiento).map(presupuestoMovimiento -> {
-
+            if(!presupuestoMovimiento.isActivo()){
+                throw new EntityCannotBeDeletedException("Cannot delete PresupuestoMovimiento with id " + idPresupuestoMovimiento + " as it has already been deleted.");
+            }
             if (presupuestoMovimiento.getMovimientos() != null && !presupuestoMovimiento.getMovimientos().isEmpty()) {
                 for(Movimiento movimiento: presupuestoMovimiento.getMovimientos()){
                     if(movimiento.isActivo()){
@@ -109,6 +112,9 @@ public class PresupuestoMovimientoRepository implements PresupuestoMovimientoDto
     @Override
     public boolean unDelete(Integer idPresupuestoMovimiento) {
         return  getByIdPresupuestoMovimiento(idPresupuestoMovimiento).map(presupuestoMovimiento -> {
+            if(presupuestoMovimiento.isActivo()){
+                throw new EntityCannotBeUndeletedException("Cannot undelete PresupuestoMovimiento with id " + idPresupuestoMovimiento + " as it's not deleted.");
+            }
             presupuestoMovimientoCrudRepository.setActivoByIdPresupuesto(idPresupuestoMovimiento,true);
             return true;
         }).orElse(false);
