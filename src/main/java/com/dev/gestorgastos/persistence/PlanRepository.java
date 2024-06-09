@@ -60,6 +60,9 @@ public class PlanRepository implements PlanDtoRepository {
 
     @Override
     public Optional<List<PlanDto>> getActiveByFechaFinBetween(LocalDate fechaInicio, LocalDate fechaFin) {
+        if(fechaInicio.isAfter(fechaFin)){
+            throw new IllegalArgumentException("FechaInicio cannot be after fechaFin");
+        }
         return planCrudRepository.findByFechaFinBetweenAndActivoTrueOrderByFechaFinAsc(fechaInicio,fechaFin).map(PlanMapper.INSTANCE::toDtos);
     }
 

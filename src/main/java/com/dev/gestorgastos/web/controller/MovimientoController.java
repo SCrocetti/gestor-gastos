@@ -2,15 +2,20 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.MovimientoDto;
 import com.dev.gestorgastos.domain.service.MovimientoService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -103,14 +108,14 @@ public class MovimientoController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/active/presupuesto/{idPresupuesto}")
-    @Operation(summary = "Get active by idPresupuesto", description = "Get a list of active Movimientos by their idPresupuesto")
+    @GetMapping("/active/presupuesto/{idPresupuestoMovimiento}")
+    @Operation(summary = "Get active by idPresupuestoMovimiento", description = "Get a list of active Movimientos by their idPresupuestoMovimiento")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No Movimiento found")
     })
-    public ResponseEntity<List<MovimientoDto>> getActivosByIdPresupuesto(@Parameter(description ="Id of the plan of the movimiento") @PathVariable("idPresupuesto") String idPresupuesto) {
-        return movimientoService.getActivosByIdPresupuesto(Integer.parseInt(idPresupuesto))
+    public ResponseEntity<List<MovimientoDto>> getActivosByIdPresupuestoMovimiento(@Parameter(description ="Id of the PresupuestoMovimiento of the movimiento") @PathVariable("idPresupuestoMovimiento") String idPresupuestoMovimiento) {
+        return movimientoService.getActivosByIdPresupuestoMovimiento(Integer.parseInt(idPresupuestoMovimiento))
                 .map(movimientos -> {
                     if (movimientos.isEmpty()) {
                         return new ResponseEntity<List<MovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -119,6 +124,31 @@ public class MovimientoController {
                     }
                 })
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/fechaHoraBetween")
+    @Operation(summary = "Get all active Movimientos with fechaHora between two moments", description = "Get the list of all active Movimientos with fechaHora between two moments")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "404", description = "No Movimiento found")
+    })
+    public ResponseEntity<?> getActiveFechaHoraBetween(
+            @RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
+            @RequestParam("endDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime) {
+        try {
+            return movimientoService.getActivosByFechaHoraBetween(startDateTime,endDateTime)
+                    .map(movimientos -> {
+                        if (movimientos.isEmpty()) {
+                            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        } else {
+                            return new ResponseEntity<>(movimientos, HttpStatus.OK);
+                        }
+                    })
+                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping("/active")
     @Operation(summary = "Get all active movimientos data", description = "Get the list of all active Movimientos")
@@ -172,18 +202,32 @@ public class MovimientoController {
     @Operation(summary = "Deletes a movimiento by id", description = "Deletes a movimiento by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Movimiento not found")
+            @ApiResponse(responseCode = "404", description = "Movimiento not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Movimiento due to a conflict")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the movimiento") @PathVariable("id") String idMovimiento) {
-        return  new ResponseEntity(movimientoService.delete(Integer.parseInt(idMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity<>(movimientoService.delete(Integer.parseInt(idMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a movimiento by id", description = "Undeletes a movimiento by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Movimiento not found")
+            @ApiResponse(responseCode = "404", description = "Movimiento not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot undelete Movimiento due to a conflict")
     })
     public ResponseEntity unDelete(@Parameter(description ="Id of the movimiento") @PathVariable("id") String idMovimiento) {
-        return  new ResponseEntity(movimientoService.unDelete(Integer.parseInt(idMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(movimientoService.unDelete(Integer.parseInt(idMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeUndeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

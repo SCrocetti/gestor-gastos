@@ -2,6 +2,8 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.PlanDto;
 import com.dev.gestorgastos.domain.service.PlanService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeUndeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -164,18 +166,32 @@ public class PlanController {
     @Operation(summary = "Deletes a plan by id", description = "Deletes a plan by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Plan not found")
+            @ApiResponse(responseCode = "404", description = "Plan not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Plan due to a conflict")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the plan") @PathVariable("id") String idPlan) {
-        return  new ResponseEntity(planService.delete(Integer.parseInt(idPlan)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity<>(planService.delete(Integer.parseInt(idPlan)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a plan by id", description = "Undeletes a plan by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "Plan not found")
+            @ApiResponse(responseCode = "404", description = "Plan not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot undelete Plan due to a conflict")
     })
     public ResponseEntity unDelete(@Parameter(description ="Id of the plan") @PathVariable("id") String idPlan) {
-        return  new ResponseEntity(planService.unDelete(Integer.parseInt(idPlan)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity(planService.unDelete(Integer.parseInt(idPlan)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeUndeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

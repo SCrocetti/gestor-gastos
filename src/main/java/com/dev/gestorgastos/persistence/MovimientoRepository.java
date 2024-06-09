@@ -66,6 +66,9 @@ public class MovimientoRepository implements MovimientoDtoRepository {
     }
     @Override
     public Optional<List<MovimientoDto>> getActivosByFechaHoraBetween(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        if(startDateTime.isAfter(endDateTime)){
+            throw new IllegalArgumentException("startDateTime cannot be after endDateTime");
+        }
         return movimientoCrudRepository.findByFechaHoraBetweenAndActivoTrueOrderByFechaHoraAsc(startDateTime,endDateTime).map(MovimientoMapper.INSTANCE::toDtos);
     }
 
