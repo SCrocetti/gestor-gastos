@@ -67,6 +67,9 @@ public class TransaccionRepository implements TransaccionDtoRepository {
 
     @Override
     public Optional<List<TransaccionDto>> getActivosByFechaHoraBetween(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        if(startDateTime.isAfter(endDateTime)){
+            throw new IllegalArgumentException("startDateTime cannot be after endDateTime");
+        }
         return transaccionCrudRepository.findByFechaHoraBetweenAndActivoTrueOrderByFechaHoraAsc(startDateTime,endDateTime).map(TransaccionMapper.INSTANCE::toDtos);
     }
 
