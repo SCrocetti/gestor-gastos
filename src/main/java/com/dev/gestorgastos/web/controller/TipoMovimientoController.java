@@ -2,6 +2,7 @@ package com.dev.gestorgastos.web.controller;
 
 import com.dev.gestorgastos.domain.dto.TipoMovimientoDto;
 import com.dev.gestorgastos.domain.service.TipoMovimientoService;
+import com.dev.gestorgastos.persistence.exception.EntityCannotBeDeletedException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,8 +40,8 @@ public class TipoMovimientoController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "No TipoMovimiento found")
     })
-    public ResponseEntity<List<TipoMovimientoDto>> getActivosByNombreTipoMovimientoDto(@Parameter(description ="Nombre of the tipoMovimiento") @PathVariable("nombre") String nombreTipoMovimiento) {
-        return tipoMovimientoService.getActiveByNombreTipoMocimientoontains(nombreTipoMovimiento)
+    public ResponseEntity<List<TipoMovimientoDto>> getActiveByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento") @PathVariable("nombre") String nombreTipoMovimiento) {
+        return tipoMovimientoService.getActiveByNombreTipoMovimientoContains(nombreTipoMovimiento)
                 .map(tiposMovimiento -> {
                     if (tiposMovimiento.isEmpty()) {
                         return new ResponseEntity<List<TipoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -57,7 +58,7 @@ public class TipoMovimientoController {
             @ApiResponse(responseCode = "404", description = "No TipoMovimiento found")
     })
     public ResponseEntity<List<TipoMovimientoDto>> getInactivosByNombreTipoMovimiento(@Parameter(description ="Nombre of the tipoMovimiento") @PathVariable("nombre") String nombreTipoMovimiento) {
-        return tipoMovimientoService.getUnactiveByNombreTipoMocimientoontains(nombreTipoMovimiento)
+        return tipoMovimientoService.getUnactiveByNombreTipoMovimientoContains(nombreTipoMovimiento)
                 .map(tiposMovimiento -> {
                     if (tiposMovimiento.isEmpty()) {
                         return new ResponseEntity<List<TipoMovimientoDto>>(HttpStatus.NOT_FOUND);
@@ -112,10 +113,18 @@ public class TipoMovimientoController {
     @Operation(summary = "Deletes a tipoMovimiento by id", description = "Deletes a tipoMovimiento by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "TipoMovimiento not found")
+            @ApiResponse(responseCode = "404", description = "TipoMovimiento not found"),
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete TipoMovimiento with active asociated Information")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the tipoMovimiento") @PathVariable("id") String idTipoMovimiento) {
-        return  new ResponseEntity(tipoMovimientoService.delete(Integer.parseInt(idTipoMovimiento)) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        try {
+            boolean deleted = tipoMovimientoService.delete(Integer.parseInt(idTipoMovimiento));
+            return new ResponseEntity<>(deleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        } catch (EntityCannotBeDeletedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping("/undelete/{id}")
     @Operation(summary = "Undeletes a tipoMovimiento by id", description = "Undeletes a tipoMovimiento by id")
