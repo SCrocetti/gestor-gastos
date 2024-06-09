@@ -8,7 +8,7 @@ public class CuentaDto {
     private Integer idProveedor;
     private Integer idDenominacion;
     private Integer idPersona;
-    private boolean activo;
+    private boolean activo=true;
     public CuentaDto() {
     }
 

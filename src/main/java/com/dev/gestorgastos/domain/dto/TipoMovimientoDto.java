@@ -3,7 +3,7 @@ package com.dev.gestorgastos.domain.dto;
 public class TipoMovimientoDto {
     private Integer idTipoMovimiento;
     private String nombreTipoMovimiento;
-    private boolean activo;
+    private boolean activo=true;
     public TipoMovimientoDto() {
     }
 

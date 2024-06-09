@@ -3,7 +3,7 @@ package com.dev.gestorgastos.domain.dto;
 public class ProveedorDto {
     private Integer idProveedor;
     private String nombreProveedor;
-    private boolean activo;
+    private boolean activo=true;
     public ProveedorDto() {
     }
 

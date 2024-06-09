@@ -3,7 +3,7 @@ package com.dev.gestorgastos.domain.dto;
 public class DenominacionDto {
     private Integer idDenominacion;
     private String nombreDenominacion;
-    private boolean activo;
+    private boolean activo=true;
     public DenominacionDto() {
     }
 

@@ -62,7 +62,7 @@ public class TransaccionRepository implements TransaccionDtoRepository {
 
     @Override
     public Optional<List<TransaccionDto>> getActivosByIdPresupuestoTransaccion(Integer idPresupuestoTransaccion) {
-        return transaccionCrudRepository.findByIdPresupuestoTransaccionAndActivoTrueOrderByIdTipoMovimientoAsc(idPresupuestoTransaccion).map(TransaccionMapper.INSTANCE::toDtos);
+        return transaccionCrudRepository.findByIdPresupuestoTransaccionAndActivoTrueOrderByIdTipoTransaccionAsc(idPresupuestoTransaccion).map(TransaccionMapper.INSTANCE::toDtos);
     }
 
     @Override

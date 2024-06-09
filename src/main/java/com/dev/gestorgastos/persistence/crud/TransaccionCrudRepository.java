@@ -21,7 +21,7 @@ public interface TransaccionCrudRepository extends CrudRepository<Transaccion,In
     Optional<List<Transaccion>> findByIdTipoTransaccionAndActivoTrue(Integer idTipoTransaccion);
     Optional<List<Transaccion>> findByIdCuentaEgresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaEgreso);
     Optional<List<Transaccion>> findByIdCuentaIngresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaIngreso);
-    Optional<List<Transaccion>> findByIdPresupuestoTransaccionAndActivoTrueOrderByIdTipoMovimientoAsc(Integer idPresupuestoTransaccion);
+    Optional<List<Transaccion>> findByIdPresupuestoTransaccionAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idPresupuestoTransaccion);
     Optional<List<Transaccion>> findByFechaHoraBetweenAndActivoTrueOrderByFechaHoraAsc(LocalDateTime startDateTime, LocalDateTime endDateTime);
     @Transactional
     @Modifying

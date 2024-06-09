@@ -16,7 +16,7 @@ public class MovimientoDto {
 
     private Integer idPresupuestoMovimiento;
 
-    private boolean activo;
+    private boolean activo=true;
 
     public MovimientoDto() {
     }

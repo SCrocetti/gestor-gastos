@@ -25,7 +25,7 @@ public class TransaccionDto {
 
     private Integer idPresupuestoTransaccion;
 
-    private boolean activo;
+    private boolean activo=true;
 
     public TransaccionDto() {
     }

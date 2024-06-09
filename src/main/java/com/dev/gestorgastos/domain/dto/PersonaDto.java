@@ -9,7 +9,7 @@ public class PersonaDto {
 
     private String apellidos;
 
-    private boolean activo;
+    private boolean activo=true;
 
     public PersonaDto() {
     }
