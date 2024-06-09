@@ -173,7 +173,7 @@ public class CuentaController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Cuenta not found"),
-            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Cuenta with active asociated Entities")
+            @ApiResponse(responseCode = "409", description = "Conflict - Cannot delete Cuenta with active asociated Information")
     })
     public ResponseEntity delete(@Parameter(description ="Id of the cuenta") @PathVariable("id") String idCuenta) {
         try {
