@@ -27,8 +27,11 @@ public class PresupuestoTransaccionService {
     public Optional<List<PresupuestoTransaccionDto>> getActivosByIdTipoTransaccion(Integer idTipoTransaccion){
         return presupuestoTransaccionRepository.getActivosByIdTipoTransaccion(idTipoTransaccion);
     }
-    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuenta(Integer idCuenta){
-        return presupuestoTransaccionRepository.getActivosByIdCuenta(idCuenta);
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaEgreso(Integer idCuentaEgreso){
+        return presupuestoTransaccionRepository.getActivosByIdCuentaEgreso(idCuentaEgreso);
+    }
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaIngreso(Integer idCuentaIngreso){
+        return presupuestoTransaccionRepository.getActivosByIdCuentaIngreso(idCuentaIngreso);
     }
     public Optional<List<PresupuestoTransaccionDto>> getActivosByIdPlan(Integer idPlan){
         return presupuestoTransaccionRepository.getActivosByIdPlan(idPlan);

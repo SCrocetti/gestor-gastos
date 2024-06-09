@@ -17,7 +17,8 @@ public interface PresupuestoTransaccionDtoRepository {
     public Optional<List<PresupuestoTransaccionDto>> getActivosByNombreTipoTransaccionContains(String nombreTipoTransaccion);
     public Optional<List<PresupuestoTransaccionDto>> getInactivosByNombreTipoTransaccionContains(String nombreTipoTransaccion);
     public Optional<List<PresupuestoTransaccionDto>> getActivosByIdTipoTransaccion(Integer idTipoTransaccion);
-    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuenta(Integer idCuenta);
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaEgreso(Integer idCuentaEgreso);
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaIngreso(Integer idCuentaIngreso);
     public Optional<List<PresupuestoTransaccionDto>> getActivosByIdPlan(Integer idPlan);
     public Optional<List<PresupuestoTransaccionDto>> getAll() ;
     public Optional<List<PresupuestoTransaccionDto>> getAllDeleted();

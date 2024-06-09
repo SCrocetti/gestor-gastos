@@ -18,7 +18,8 @@ public interface PresupuestoTransaccionCrudRepository extends CrudRepository<Pre
     Optional<List<PresupuestoTransaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoTrueOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
     Optional<List<PresupuestoTransaccion>> findByTipoTransaccionNombreTipoTransaccionContainingAndActivoFalseOrderByIdTipoTransaccionAsc(String nombreTipoTransaccion);
     Optional<List<PresupuestoTransaccion>> findByIdTipoTransaccionAndActivoTrue(Integer idTipoTransaccion);
-    Optional<List<PresupuestoTransaccion>> findByIdCuentaAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuenta);
+    Optional<List<PresupuestoTransaccion>> findByIdCuentaEgresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaEgreso);
+    Optional<List<PresupuestoTransaccion>> findByIdCuentaIngresoAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idCuentaIngreso);
     Optional<List<PresupuestoTransaccion>> findByIdPlanAndActivoTrueOrderByIdTipoTransaccionAsc(Integer idPlan);
     @Transactional
     @Modifying

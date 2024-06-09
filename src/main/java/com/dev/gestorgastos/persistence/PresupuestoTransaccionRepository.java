@@ -49,8 +49,13 @@ public class PresupuestoTransaccionRepository implements PresupuestoTransaccionD
     }
 
     @Override
-    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuenta(Integer idCuenta) {
-        return presupuestoTransaccionCrudRepository.findByIdCuentaAndActivoTrueOrderByIdTipoTransaccionAsc(idCuenta).map(PresupuestoTransaccionMapper.INSTANCE::toDtos);
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaEgreso(Integer idCuentaEgreso) {
+        return presupuestoTransaccionCrudRepository.findByIdCuentaEgresoAndActivoTrueOrderByIdTipoTransaccionAsc(idCuentaEgreso).map(PresupuestoTransaccionMapper.INSTANCE::toDtos);
+    }
+
+    @Override
+    public Optional<List<PresupuestoTransaccionDto>> getActivosByIdCuentaIngreso(Integer idCuentaIngreso) {
+        return presupuestoTransaccionCrudRepository.findByIdCuentaIngresoAndActivoTrueOrderByIdTipoTransaccionAsc(idCuentaIngreso).map(PresupuestoTransaccionMapper.INSTANCE::toDtos);
     }
 
     @Override
